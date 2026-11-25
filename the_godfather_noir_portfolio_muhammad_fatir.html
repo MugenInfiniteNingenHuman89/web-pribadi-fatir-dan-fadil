@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MUHAMMAD FATIR // LA FAMIGLIA ARCHIVES [1972-MF]</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Cinzel (Godfather Classic Serif), Playfair Display (Editorial), Courier Prime (Criminal Dossier Typewriter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            noir: {
+              pitch: '#080808',
+              deep: '#111111',
+              charcoal: '#1c1c1c',
+              ash: '#2e2e2e',
+              ivory: '#e8e4d9',
+              paper: '#d6d0c0',
+              blood: '#7a0a0a',
+              bloodBright: '#9e1111'
+            }
+          },
+          fontFamily: {
+            godfather: ['Cinzel', 'serif'],
+            editorial: ['Playfair Display', 'serif'],
+            typewriter: ['Courier Prime', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* =========================================
+       MONOCHROME NOIR & GODFATHER ARCHIVE STYLES
+       ========================================= */
+    :root {
+      --bg-pitch: #080808;
+      --bg-deep: #111111;
+      --ivory: #e8e4d9;
+      --blood: #7a0a0a;
+    }
+
+    body {
+      background-color: var(--bg-pitch);
+      color: var(--ivory);
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--ivory);
+      color: var(--bg-pitch);
+    }
+
+    /* Custom Monochrome Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #080808;
+      border-left: 1px solid #2e2e2e;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #4a4a4a;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--ivory);
+    }
+
+    /* Film Grain & Venetian Blind Shadows Overlay */
+    .film-grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.065;
+      background-image: radial-gradient(#ffffff 0.75px, transparent 0.75px), radial-gradient(#e8e4d9 0.75px, #080808 0.75px);
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
+      transition: opacity 0.4s ease;
+    }
+
+    .venetian-blinds {
+      position: fixed;
+      inset: -15%;
+      pointer-events: none;
+      z-index: 1;
+      background: repeating-linear-gradient(
+        -24deg,
+        rgba(0, 0, 0, 0.82) 0px,
+        rgba(0, 0, 0, 0.82) 28px,
+        rgba(232, 228, 217, 0.045) 30px,
+        rgba(232, 228, 217, 0.045) 54px
+      );
+      will-change: transform;
+      transition: opacity 0.4s ease;
+    }
+
+    .noir-fx-off {
+      opacity: 0 !important;
+    }
+
+    /* Dossier Card & Vintage Newspaper Divider */
+    .dossier-card {
+      background: linear-gradient(145deg, #121212 0%, #0b0b0b 100%);
+      border: 1px solid #2e2e2e;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85), inset 0 0 0 1px rgba(232, 228, 217, 0.04);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+      position: relative;
+    }
+
+    .dossier-card:hover {
+      border-color: rgba(232, 228, 217, 0.45);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95), 0 0 25px rgba(232, 228, 217, 0.05);
+    }
+
+    /* Aged Parchment Paper Inset */
+    .parchment-sheet {
+      background-color: #e8e4d9;
+      color: #111111;
+      background-image: radial-gradient(rgba(17, 17, 17, 0.08) 1px, transparent 0);
+      background-size: 16px 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75);
+    }
+
+    /* Confidential Blood Stamp */
+    .stamp-confidential {
+      border: 2.5px solid #7a0a0a;
+      color: #7a0a0a;
+      font-family: 'Courier Prime', monospace;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 2px 10px;
+      transform: rotate(-6deg);
+      display: inline-block;
+      box-shadow: inset 0 0 0 1px rgba(122, 10, 10, 0.35);
+      user-select: none;
+    }
+
+    /* Wax Seal Button / Badge */
+    .wax-seal {
+      background: radial-gradient(circle at 35% 35%, #9e1111, #7a0a0a 65%, #470404 100%);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.85), inset 0 2px 4px rgba(255, 255, 255, 0.2), inset 0 -3px 6px rgba(0, 0, 0, 0.6);
+      border: 2px solid #590606;
+    }
+
+    /* Classic Double Newspaper Rule */
+    .newspaper-rule {
+      border-top: 2px solid #2e2e2e;
+      border-bottom: 1px solid #2e2e2e;
+      height: 5px;
+    }
+
+    /* Typewriter Blink */
+    .cursor-blink {
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* GPU Parallax Optimization */
+    .parallax-layer {
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
+    }
+
+    /* Subtle Smoke Drift */
+    @keyframes smokeDrift {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.18; }
+      50% { transform: translate3d(25px, -20px, 0) scale(1.06); opacity: 0.28; }
+    }
+    .noir-smoke {
+      animation: smokeDrift 14s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="font-typewriter antialiased relative selection:bg-noir-ivory selection:text-noir-pitch">
+
+  <!-- Film Grain & Venetian Blinds Overlay -->
+  <div id="film-grain" class="film-grain" aria-hidden="true"></div>
+
+  <!-- =========================================================
+       PARALLAX LAYER 1: VENETIAN BLINDS, VIGNETTE & NOIR SMOKE
+       ========================================================= -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+    <!-- Moving Venetian Blinds Shadow -->
+    <div id="parallax-blinds" class="venetian-blinds parallax-layer"></div>
+
+    <!-- Monochrome Smoke / Fog Clouds -->
+    <div id="parallax-smoke-1" class="parallax-layer noir-smoke absolute -top-24 -left-24 w-[520px] h-[520px] rounded-full bg-white/[0.04] blur-[130px]"></div>
+    <div id="parallax-smoke-2" class="parallax-layer noir-smoke absolute bottom-0 right-[-10%] w-[560px] h-[560px] rounded-full bg-noir-ivory/[0.04] blur-[140px]" style="animation-delay: -7s;"></div>
+
+    <!-- Dramatic Film Noir Vignette -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_25%,#080808_95%)]"></div>
+  </div>
+
+  <!-- =========================================================
+       TOP ARCHIVE NAVIGATION BAR
+       ========================================================= -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-noir-pitch/92 backdrop-blur-md border-b border-noir-ash">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+      
+      <!-- Brand / Godfather Puppet-Strings Emblem -->
+      <a href="#hero" class="flex items-center gap-3.5 group">
+        <div class="w-10 h-10 bg-noir-deep border border-noir-ivory/40 flex flex-col items-center justify-center relative shadow-md group-hover:border-noir-ivory transition-colors">
+          <!-- Minimalist Puppet Strings SVG -->
+          <svg class="w-6 h-3 text-noir-ivory/70 mb-0.5" viewBox="0 0 40 16" fill="none">
+            <line x1="4" y1="2" x2="36" y2="2" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="20" y1="2" x2="20" y2="6" stroke="currentColor" stroke-width="1.2"/>
+            <line x1="10" y1="2" x2="10" y2="15" stroke="currentColor" stroke-width="0.9"/>
+            <line x1="20" y1="6" x2="20" y2="15" stroke="currentColor" stroke-width="0.9"/>
+            <line x1="30" y1="2" x2="30" y2="15" stroke="currentColor" stroke-width="0.9"/>
+          </svg>
+          <span class="font-godfather font-black text-xs tracking-widest text-white leading-none">MF</span>
+        </div>
+
+        <div>
+          <span class="font-godfather font-extrabold text-white tracking-[0.14em] text-sm sm:text-base block">
+            MUHAMMAD FATIR
+          </span>
+          <span class="font-typewriter text-[10px] text-neutral-400 tracking-widest uppercase block">
+            CASE FILE #1972-MF // ARCHIVES
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Archive Navigation -->
+      <nav class="hidden lg:flex items-center gap-7 font-typewriter text-xs tracking-widest uppercase">
+        <a href="#don" class="text-neutral-400 hover:text-white transition-colors py-1 border-b border-transparent hover:border-noir-ivory">I. THE DON</a>
+        <a href="#syndicate" class="text-neutral-400 hover:text-white transition-colors py-1 border-b border-transparent hover:border-noir-ivory">II. THE SYNDICATE</a>
+        <a href="#operations" class="text-neutral-400 hover:text-white transition-colors py-1 border-b border-transparent hover:border-noir-ivory">III. OPERATIONS</a>
+        <a href="#consigliere" class="text-neutral-400 hover:text-white transition-colors py-1 border-b border-transparent hover:border-noir-ivory">IV. CONSIGLIERE</a>
+      </nav>
+
+      <!-- Controls: Noir Grain Toggle & Mobile Drawer -->
+      <div class="flex items-center gap-2.5">
+        <button id="noir-toggle-btn" title="Aktifkan/Matikan Efek Film Grain & Venetian Shadows"
+          class="font-typewriter text-[11px] px-3 py-1.5 border border-noir-ash bg-noir-deep text-noir-ivory hover:bg-noir-ivory hover:text-noir-pitch transition-colors flex items-center gap-2">
+          <span id="noir-indicator" class="w-2 h-2 rounded-full bg-noir-blood inline-block"></span>
+          <span id="noir-status-text">NOIR FX: ON</span>
+        </button>
+
+        <button id="mobile-menu-btn" aria-label="Buka Menu Arsip"
+          class="lg:hidden p-2 border border-noir-ash text-noir-ivory hover:bg-noir-ivory hover:text-noir-pitch transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="square" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Archive Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-noir-deep border-b border-noir-ash px-4 py-4 space-y-2.5 font-typewriter text-xs tracking-widest uppercase">
+      <a href="#don" class="mobile-nav-link block py-2.5 px-3 border border-noir-ash/70 hover:border-noir-ivory hover:text-white">I. THE DON (PROFILE)</a>
+      <a href="#syndicate" class="mobile-nav-link block py-2.5 px-3 border border-noir-ash/70 hover:border-noir-ivory hover:text-white">II. THE SYNDICATE (SKILLS)</a>
+      <a href="#operations" class="mobile-nav-link block py-2.5 px-3 border border-noir-ash/70 hover:border-noir-ivory hover:text-white">III. OPERATIONS (PROJECTS)</a>
+      <a href="#consigliere" class="mobile-nav-link block py-2.5 px-3 border border-noir-ash/70 hover:border-noir-ivory hover:text-white">IV. CONSIGLIERE (CONTACT)</a>
+    </div>
+  </header>
+
+  <main class="relative z-10">
+
+    <!-- =========================================================
+         HERO SECTION: THE GODFATHER MONOCHROME INTRODUCTION
+         ========================================================= -->
+    <section id="hero" class="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden">
+
+      <!-- PARALLAX LAYER 2 (MIDGROUND): Giant Transparent Typography & Crosshairs -->
+      <div class="absolute inset-0 pointer-events-none overflow-hidden select-none" aria-hidden="true">
+        <div data-parallax-speed="0.24" data-mouse-factor="14" class="js-parallax parallax-layer absolute top-[18%] -left-8 opacity-[0.035] whitespace-nowrap">
+          <span class="font-godfather font-black text-[110px] sm:text-[190px] tracking-[0.12em] text-white">
+            COSA NOSTRA
+          </span>
+        </div>
+
+        <div data-parallax-speed="-0.18" data-mouse-factor="-18" class="js-parallax parallax-layer absolute bottom-[12%] -right-10 opacity-[0.04] whitespace-nowrap">
+          <span class="font-godfather font-black text-[100px] sm:text-[175px] tracking-[0.15em] text-noir-ivory">
+            LA FAMIGLIA
+          </span>
+        </div>
+
+        <!-- Subtle Noir Reticle / Crosshair SVG -->
+        <div data-parallax-speed="0.14" data-mouse-factor="24" class="js-parallax parallax-layer absolute top-32 right-[10%] opacity-25 hidden md:block">
+          <svg class="w-40 h-40 text-noir-ivory" viewBox="0 0 120 120" fill="none">
+            <circle cx="60" cy="60" r="52" stroke="currentColor" stroke-width="0.8" stroke-dasharray="4 4"/>
+            <circle cx="60" cy="60" r="28" stroke="currentColor" stroke-width="0.8"/>
+            <line x1="60" y1="0" x2="60" y2="120" stroke="currentColor" stroke-width="0.6"/>
+            <line x1="0" y1="60" x2="120" y2="60" stroke="currentColor" stroke-width="0.6"/>
+            <circle cx="60" cy="60" r="3" fill="#7a0a0a"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- PARALLAX LAYER 3 (FOREGROUND): Hero Content & Mugshot Dossier -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+
+          <!-- Left Column: Title, Godfather Puppet-Bar & Quote -->
+          <div data-parallax-speed="-0.04" data-mouse-factor="-7" class="js-parallax parallax-layer lg:col-span-7 space-y-6">
+            
+            <!-- Status Badge -->
+            <div class="inline-flex flex-wrap items-center gap-3 px-3.5 py-1.5 bg-noir-deep border border-noir-ash text-xs tracking-widest uppercase">
+              <span class="w-2 h-2 bg-noir-blood inline-block"></span>
+              <span class="text-noir-ivory">CASE FILE #1972-MF</span>
+              <span class="text-neutral-500">//</span>
+              <span class="text-white font-bold">UNTOUCHABLE</span>
+            </div>
+
+            <!-- Godfather Signature Puppet Strings + Name -->
+            <div class="pt-1">
+              <!-- Puppet Strings Bar SVG above Title -->
+              <svg class="w-56 sm:w-72 h-8 text-noir-ivory/80 mb-1" viewBox="0 0 260 32" fill="none" aria-hidden="true">
+                <line x1="4" y1="4" x2="256" y2="4" stroke="currentColor" stroke-width="2.5"/>
+                <line x1="130" y1="4" x2="130" y2="12" stroke="currentColor" stroke-width="2"/>
+                <line x1="38" y1="4" x2="38" y2="30" stroke="currentColor" stroke-width="1.2"/>
+                <line x1="88" y1="4" x2="88" y2="30" stroke="currentColor" stroke-width="1.2"/>
+                <line x1="130" y1="12" x2="130" y2="30" stroke="currentColor" stroke-width="1.2"/>
+                <line x1="176" y1="4" x2="176" y2="30" stroke="currentColor" stroke-width="1.2"/>
+                <line x1="222" y1="4" x2="222" y2="30" stroke="currentColor" stroke-width="1.2"/>
+              </svg>
+
+              <h1 class="font-godfather font-black text-4xl sm:text-6xl lg:text-[64px] text-white tracking-[0.06em] uppercase leading-[1.06]">
+                MUHAMMAD <br/>
+                <span class="text-noir-ivory">FATIR</span>
+              </h1>
+            </div>
+
+            <!-- Subtitle Role -->
+            <p class="font-editorial italic text-lg sm:text-2xl text-neutral-300 tracking-wide">
+              The Architect of Digital Syndicates — Software Engineer &amp; Systems Strategist
+            </p>
+
+            <!-- Iconic Godfather Adapted Quote -->
+            <blockquote class="border-l-2 border-noir-blood pl-4 py-1.5 bg-noir-deep/70 max-w-xl">
+              <p class="font-editorial italic text-base sm:text-lg text-white">
+                &ldquo;I&rsquo;m gonna build you a system you can&rsquo;t refuse.&rdquo;
+              </p>
+              <footer class="font-typewriter text-xs text-neutral-400 mt-1">
+                — ARCHIVE TRANSCRIPT, REC. 1972-MF // <span id="hero-typing"></span><span class="cursor-blink">_</span>
+              </footer>
+            </blockquote>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <a href="#operations" class="px-7 py-3.5 bg-noir-ivory text-noir-pitch font-godfather font-bold text-xs sm:text-sm tracking-[0.16em] uppercase hover:bg-white transition-colors shadow-lg">
+                OPEN CASE FILES
+              </a>
+              <a href="#consigliere" class="px-7 py-3.5 bg-noir-deep text-noir-ivory border border-noir-ash font-typewriter text-xs sm:text-sm tracking-[0.14em] uppercase hover:border-noir-ivory hover:text-white transition-colors">
+                SEND TELEGRAM
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Noir Mugshot / Dossier Card -->
+          <div data-parallax-speed="0.08" data-mouse-factor="15" class="js-parallax parallax-layer lg:col-span-5">
+            <div id="hero-dossier-card" class="dossier-card p-6 sm:p-8">
+              <!-- Top Classification Header -->
+              <div class="flex items-center justify-between border-b border-noir-ash pb-3 mb-5 text-xs">
+                <span class="text-neutral-400 tracking-widest">FEDERAL ARCHIVE // NO. 72-MF</span>
+                <span class="stamp-confidential text-[10px]">CONFIDENTIAL</span>
+              </div>
+
+              <!-- Monochrome Noir Silhouette Portrait / Mugshot Frame -->
+              <div class="relative bg-noir-pitch border border-noir-ash p-4 mb-5 overflow-hidden">
+                <!-- Height Measurement Lines (Police Mugshot Backdrop) -->
+                <div class="absolute inset-y-0 right-3 flex flex-col justify-between py-3 text-[9px] text-neutral-600 select-none pointer-events-none">
+                  <span>6&apos;2&quot; —</span>
+                  <span>6&apos;0&quot; —</span>
+                  <span>5&apos;10&quot; —</span>
+                  <span>5&apos;8&quot; —</span>
+                </div>
+
+                <!-- Classic Noir Fedora Silhouette SVG -->
+                <div class="w-40 h-44 mx-auto relative flex items-end justify-center">
+                  <svg viewBox="0 0 200 210" class="w-full h-full">
+                    <defs>
+                      <radialGradient id="noirSpotlight" cx="50%" cy="40%" r="55%">
+                        <stop offset="0%" stop-color="#3a3a3a"/>
+                        <stop offset="65%" stop-color="#171717"/>
+                        <stop offset="100%" stop-color="#080808"/>
+                      </radialGradient>
+                    </defs>
+                    <!-- Spotlight Backdrop -->
+                    <rect x="0" y="0" width="200" height="210" fill="url(#noirSpotlight)"/>
+                    <!-- Fedora Hat Crown & Brim -->
+                    <path d="M58 68 C62 36, 138 36, 142 68 Z" fill="#0c0c0c" stroke="#4a4a4a" stroke-width="1.2"/>
+                    <ellipse cx="100" cy="70" rx="74" ry="12" fill="#080808" stroke="#666666" stroke-width="1.2"/>
+                    <!-- Shadowed Face Silhouette -->
+                    <path d="M68 76 C68 118, 78 134, 100 136 C122 134, 132 118, 132 76 Z" fill="#141414"/>
+                    <!-- Tailored Suit & Tuxedo Lapels -->
+                    <path d="M32 210 C38 158, 65 144, 100 144 C135 144, 162 158, 168 210 Z" fill="#0a0a0a" stroke="#333333" stroke-width="1.2"/>
+                    <!-- Crisp White Dress Shirt & Bowtie -->
+                    <polygon points="86,144 114,144 100,192" fill="#e8e4d9"/>
+                    <polygon points="90,148 110,148 100,155" fill="#080808"/>
+                    <!-- Signature Red Rose Lapel Boutonniere -->
+                    <circle cx="128" cy="172" r="5.5" fill="#7a0a0a"/>
+                    <circle cx="127" cy="171" r="2" fill="#9e1111"/>
+                  </svg>
+                </div>
+
+                <!-- Mugshot Placard -->
+                <div class="mt-2 bg-noir-ivory text-noir-pitch text-center py-1.5 px-3 font-typewriter font-bold text-xs tracking-[0.2em] border border-noir-pitch">
+                  FATIR, M. // 1972-MF
+                </div>
+              </div>
+
+              <!-- Dossier Metadata -->
+              <div class="space-y-2 text-xs border-b border-noir-ash pb-4 mb-4">
+                <div class="flex justify-between">
+                  <span class="text-neutral-500">SUBJECT:</span>
+                  <span class="text-white font-bold">MUHAMMAD FATIR</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-neutral-500">RANK:</span>
+                  <span class="text-noir-ivory">DON OF ARCHITECTURE</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-neutral-500">TERRITORY:</span>
+                  <span class="text-noir-ivory">SURAKARTA // GLOBAL NET</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-neutral-500">CODE OF CONDUCT:</span>
+                  <span class="text-white">OMERTÀ (ZERO LEAKS)</span>
+                </div>
+              </div>
+
+              <!-- Wax Seal Emblem Footer -->
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] text-neutral-400 italic">&ldquo;Never hate your enemies. It affects your judgment.&rdquo;</span>
+                <div class="wax-seal w-10 h-10 rounded-full flex items-center justify-center font-godfather font-black text-xs text-noir-ivory shrink-0" title="Official Family Seal">
+                  MF
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Bottom Newspaper Divider -->
+      <div class="absolute bottom-0 inset-x-0 newspaper-rule opacity-60"></div>
+    </section>
+
+    <!-- =========================================================
+         SECTION I: THE DON'S RECORD (DOSSIER / ABOUT)
+         ========================================================= -->
+    <section id="don" class="relative py-24 sm:py-32">
+      <!-- Midground Parallax Word -->
+      <div data-parallax-speed="0.16" data-mouse-factor="-14" class="js-parallax parallax-layer absolute right-4 top-16 pointer-events-none select-none opacity-[0.03] hidden md:block">
+        <span class="font-godfather font-black text-[130px] tracking-widest text-white">OMERTÀ</span>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Editorial Section Heading -->
+        <div class="mb-14">
+          <div class="text-xs text-neutral-400 tracking-[0.25em] uppercase mb-2">SECTION I // INTELLIGENCE RECORD</div>
+          <h2 class="font-godfather font-black text-3xl sm:text-5xl text-white tracking-wider uppercase">
+            THE DON&rsquo;S <span class="text-noir-ivory">DOSSIER</span>
+          </h2>
+          <div class="w-24 h-0.5 bg-noir-blood mt-4"></div>
+        </div>
+
+        <div class="grid lg:grid-cols-12 gap-10 items-start">
+          
+          <!-- Aged Parchment FBI / Police Dossier Document -->
+          <div class="lg:col-span-7 parchment-sheet p-6 sm:p-10 relative border-2 border-noir-ash">
+            <!-- Top Secret Stamp -->
+            <div class="flex flex-wrap items-center justify-between gap-4 border-b-2 border-noir-pitch/25 pb-4 mb-6">
+              <div>
+                <div class="text-[11px] font-bold tracking-[0.2em] text-neutral-700">BUREAU OF DIGITAL OPERATIONS</div>
+                <div class="font-godfather font-black text-xl sm:text-2xl text-noir-pitch">SUBJECT PROFILE: M. FATIR</div>
+              </div>
+              <span class="stamp-confidential text-xs">TOP SECRET</span>
+            </div>
+
+            <div class="space-y-4 text-sm sm:text-base leading-relaxed text-neutral-900">
+              <p>
+                <strong>RINGKASAN INTELIJEN:</strong> Muhammad Fatir beroperasi di balik layar infrastruktur digital modern sebagai <span class="underline decoration-noir-blood decoration-2 font-bold">Systems Strategist &amp; Full-Stack Engineer</span>. Dikenal karena ketenangan dalam merancang arsitektur perangkat lunak berskala tinggi yang presisi, tangguh, dan bebas dari celah keamanan.
+              </p>
+              <p>
+                Berpegang teguh pada prinsip <em>Omertà</em> dalam rekayasa kode: setiap modul dibangun secara terisolasi, bersih tanpa ketergantungan berlebih (<em>zero-bloat</em>), serta menjaga kerahasiaan dan integritas data pengguna di atas segalanya.
+              </p>
+              <p>
+                Mulai dari mengendalikan jaringan sensor IoT di lapangan hingga menyusun antarmuka web kelas eksekutif dan pipeline kecerdasan buatan, setiap operasi dieksekusi dengan perhitungan matang—tanpa suara, tanpa jejak <em>bug</em>.
+              </p>
+            </div>
+
+            <!-- Typewriter Redacted & Verified Notes -->
+            <div class="mt-8 pt-5 border-t border-noir-pitch/25 grid sm:grid-cols-2 gap-4 text-xs">
+              <div>
+                <span class="font-bold block text-noir-pitch uppercase">MODUS OPERANDI:</span>
+                <span class="text-neutral-800">Clean Architecture, Offline-First Resilience, Sub-Second Latency.</span>
+              </div>
+              <div>
+                <span class="font-bold block text-noir-pitch uppercase">CLEARANCE LEVEL:</span>
+                <span class="text-noir-blood font-bold">OMEGA // FULL SYSTEM AUTHORITY</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Three Pillars of the Family (Parallax Offset) -->
+          <div data-parallax-speed="-0.06" data-mouse-factor="10" class="js-parallax parallax-layer lg:col-span-5 space-y-5">
+            <div class="dossier-card p-6">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-godfather font-bold text-white text-lg tracking-wide">01. LOYALTY TO CLEAN CODE</span>
+                <span class="text-xs text-neutral-500">[PRINCIPLE I]</span>
+              </div>
+              <p class="text-sm text-neutral-300 leading-relaxed">
+                Kode yang rapi adalah kehormatan keluarga. Setiap baris ditulis agar mudah diaudit, skalabel, dan tahan uji waktu.
+              </p>
+            </div>
+
+            <div class="dossier-card p-6">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-godfather font-bold text-white text-lg tracking-wide">02. SILENT EXECUTION</span>
+                <span class="text-xs text-neutral-500">[PRINCIPLE II]</span>
+              </div>
+              <p class="text-sm text-neutral-300 leading-relaxed">
+                Performa maksimal tanpa keributan. Optimasi memori, caching lokal, dan responsivitas instan di segala perangkat.
+              </p>
+            </div>
+
+            <div class="dossier-card p-6">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-godfather font-bold text-white text-lg tracking-wide">03. IRONCLAD SECURITY</span>
+                <span class="text-xs text-noir-blood font-bold">[OMERTÀ]</span>
+              </div>
+              <p class="text-sm text-neutral-300 leading-relaxed">
+                Apa yang terjadi di dalam sistem tetap berada di dalam sistem. Enkripsi lokal dan validasi ketat di setiap gerbang API.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="newspaper-rule opacity-50"></div>
+
+    <!-- =========================================================
+         SECTION II: THE SYNDICATE (HIERARCHY OF CAPABILITIES)
+         ========================================================= -->
+    <section id="syndicate" class="relative py-24 sm:py-32">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="mb-14">
+          <div class="text-xs text-neutral-400 tracking-[0.25em] uppercase mb-2">SECTION II // ORGANIZATIONAL HIERARCHY</div>
+          <h2 class="font-godfather font-black text-3xl sm:text-5xl text-white tracking-wider uppercase">
+            THE <span class="text-noir-ivory">SYNDICATE</span>
+          </h2>
+          <p class="font-editorial italic text-neutral-400 text-base sm:text-lg mt-2">
+            Struktur komando teknis yang menopang setiap operasi digital Muhammad Fatir.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          
+          <!-- Tier 1: The Consigliere -->
+          <div class="dossier-card p-7 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between border-b border-noir-ash pb-3 mb-5">
+                <span class="text-xs tracking-widest text-neutral-400">RANK I</span>
+                <span class="text-xs text-noir-blood font-bold tracking-widest">STRATEGY</span>
+              </div>
+              <h3 class="font-godfather font-extrabold text-2xl text-white mb-1">THE CONSIGLIERE</h3>
+              <p class="font-editorial italic text-sm text-neutral-400 mb-6">System Architecture, Logic &amp; AI Pipelines</p>
+
+              <div class="space-y-4 text-xs">
+                <div>
+                  <div class="flex justify-between mb-1.5">
+                    <span class="text-noir-ivory">System Design &amp; Architecture</span>
+                    <span class="text-white font-bold">95%</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-noir-charcoal">
+                    <div class="h-full bg-noir-ivory" style="width: 95%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1.5">
+                    <span class="text-noir-ivory">Python / FastAPI / NLP Models</span>
+                    <span class="text-white font-bold">88%</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-noir-charcoal">
+                    <div class="h-full bg-noir-ivory" style="width: 88%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1.5">
+                    <span class="text-noir-ivory">Database Modeling &amp; IndexedDB</span>
+                    <span class="text-white font-bold">92%</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-noir-charcoal">
+                    <div class="h-full bg-noir-ivory" style="width: 92%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-noir-ash text-[11px] text-neutral-500">
+              &ldquo;Penasihat utama di balik setiap keputusan algoritma.&rdquo;
+            </div>
+          </div>
+
+          <!-- Tier 2: The Caporegimes -->
+          <div class="dossier-card p-7 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between border-b border-noir-ash pb-3 mb-5">
+                <span class="text-xs tracking-widest text-neutral-400">RANK II</span>
+                <span class="text-xs text-noir-blood font-bold tracking-widest">OPERATIONS</span>
+              </div>
+              <h3 class="font-godfather font-extrabold text-2xl text-white mb-1">THE CAPOREGIMES</h3>
+              <p class="font-editorial italic text-sm text-neutral-400 mb-6">Full-Stack Web, Interfaces &amp; APIs</p>
+
+              <div class="space-y-4 text-xs">
+                <div>
+                  <div class="flex justify-between mb-1.5">
+                    <span class="text-noir-ivory">JavaScript (ES6+) / TypeScript</span>
+                    <span class="text-white font-bold">94%</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-noir-charcoal">
+                    <div class="h-full bg-white" style="width: 94%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1.5">
+                    <span class="text-noir-ivory">React / Next.js / Offline PWA</span>
+                    <span class="text-white font-bold">91%</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-noir-charcoal">
+                    <div class="h-full bg-white" style="width: 91%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1.5">
+                    <span class="text-noir-ivory">Tailwind CSS / Editorial UI</span>
+                    <span class="text-white font-bold">96%</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-noir-charcoal">
+                    <div class="h-full bg-white" style="width: 96%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-noir-ash text-[11px] text-neutral-500">
+              &ldquo;Eksekutor lapangan untuk antarmuka &amp; layanan web.&rdquo;
+            </div>
+          </div>
+
+          <!-- Tier 3: The Enforcers -->
+          <div class="dossier-card p-7 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between border-b border-noir-ash pb-3 mb-5">
+                <span class="text-xs tracking-widest text-neutral-400">RANK III</span>
+                <span class="text-xs text-noir-blood font-bold tracking-widest">HARDWARE &amp; SEC</span>
+              </div>
+              <h3 class="font-godfather font-extrabold text-2xl text-white mb-1">THE ENFORCERS</h3>
+              <p class="font-editorial italic text-sm text-neutral-400 mb-6">IoT Telemetry, Embedded &amp; Security</p>
+
+              <div class="space-y-4 text-xs">
+                <div>
+                  <div class="flex justify-between mb-1.5">
+                    <span class="text-noir-ivory">ESP32 / Microcontroller C++</span>
+                    <span class="text-white font-bold">90%</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-noir-charcoal">
+                    <div class="h-full bg-noir-ivory" style="width: 90%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1.5">
+                    <span class="text-noir-ivory">MQTT / WebSocket Real-Time</span>
+                    <span class="text-white font-bold">89%</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-noir-charcoal">
+                    <div class="h-full bg-noir-ivory" style="width: 89%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1.5">
+                    <span class="text-noir-ivory">Linux / Docker / Zero-Trust Auth</span>
+                    <span class="text-white font-bold">87%</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-noir-charcoal">
+                    <div class="h-full bg-noir-ivory" style="width: 87%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-noir-ash text-[11px] text-neutral-500">
+              &ldquo;Penjaga gerbang perangkat keras dan integritas jaringan.&rdquo;
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="newspaper-rule opacity-50"></div>
+
+    <!-- =========================================================
+         SECTION III: CLOSED OPERATIONS (EVIDENCE EXHIBITS)
+         ========================================================= -->
+    <section id="operations" class="relative py-24 sm:py-32">
+      <!-- Midground Parallax Typography -->
+      <div data-parallax-speed="0.18" data-mouse-factor="12" class="js-parallax parallax-layer absolute left-4 top-20 pointer-events-none select-none opacity-[0.03] hidden md:block">
+        <span class="font-godfather font-black text-[125px] tracking-widest text-white">ARCHIVES</span>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+          <div>
+            <div class="text-xs text-neutral-400 tracking-[0.25em] uppercase mb-2">SECTION III // EVIDENCE ROOM</div>
+            <h2 class="font-godfather font-black text-3xl sm:text-5xl text-white tracking-wider uppercase">
+              CLOSED <span class="text-noir-ivory">OPERATIONS</span>
+            </h2>
+          </div>
+
+          <!-- Evidence Filter Tabs -->
+          <div class="flex flex-wrap gap-2 text-xs" id="exhibit-filters">
+            <button data-filter="ALL" class="filter-btn active px-4 py-2 border border-noir-ivory bg-noir-ivory text-noir-pitch font-bold tracking-wider transition-colors">
+              ALL EXHIBITS
+            </button>
+            <button data-filter="WEB" class="filter-btn px-4 py-2 border border-noir-ash bg-noir-deep text-neutral-300 hover:border-noir-ivory hover:text-white tracking-wider transition-colors">
+              SYNDICATE WEB
+            </button>
+            <button data-filter="IOT" class="filter-btn px-4 py-2 border border-noir-ash bg-noir-deep text-neutral-300 hover:border-noir-ivory hover:text-white tracking-wider transition-colors">
+              HARDWARE / IOT
+            </button>
+            <button data-filter="AI" class="filter-btn px-4 py-2 border border-noir-ash bg-noir-deep text-neutral-300 hover:border-noir-ivory hover:text-white tracking-wider transition-colors">
+              INTELLIGENCE / AI
+            </button>
+          </div>
+        </div>
+
+        <!-- Evidence Cards Grid -->
+        <div class="grid md:grid-cols-2 gap-8">
+
+          <!-- EXHIBIT A -->
+          <article data-category="IOT" class="exhibit-card dossier-card p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-4 text-xs">
+                <span class="px-2.5 py-1 bg-noir-charcoal border border-noir-ash text-white font-bold tracking-widest">EXHIBIT A // CASE #041</span>
+                <span class="stamp-confidential text-[10px]">CLOSED</span>
+              </div>
+
+              <!-- Monochrome Wireframe Blueprint Preview -->
+              <div class="h-44 mb-6 bg-noir-pitch border border-noir-ash relative overflow-hidden flex items-center justify-center p-4">
+                <div class="absolute inset-0 opacity-15" style="background-image: radial-gradient(#e8e4d9 1px, transparent 1px); background-size: 14px 14px;"></div>
+                <div class="relative z-10 text-center">
+                  <div class="text-[10px] tracking-[0.25em] text-neutral-400 mb-1">INFRASTRUCTURE SURVEILLANCE</div>
+                  <div class="font-godfather font-black text-2xl sm:text-3xl text-white tracking-widest">HYDROGUARD</div>
+                  <div class="text-[11px] text-neutral-400 mt-1.5">WATER LEVEL TELEMETRY // DAM GATE CONTROL</div>
+                </div>
+              </div>
+
+              <h3 class="font-godfather font-bold text-xl sm:text-2xl text-white mb-2">
+                Sistem Telemetri Bendungan &amp; Pintu Air
+              </h3>
+              <p class="text-neutral-300 text-sm leading-relaxed mb-6">
+                Jaringan sensor pengawas ketinggian muka air dan curah hujan secara real-time. Memberikan kendali penuh atas aktuator pintu air serta protokol peringatan dini otomatis sebelum krisis terjadi.
+              </p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap gap-2 mb-6 text-[11px]">
+                <span class="px-2.5 py-0.5 bg-noir-charcoal border border-noir-ash text-noir-ivory">ESP32 C++</span>
+                <span class="px-2.5 py-0.5 bg-noir-charcoal border border-noir-ash text-noir-ivory">MQTT Protocol</span>
+                <span class="px-2.5 py-0.5 bg-noir-charcoal border border-noir-ash text-noir-ivory">React Dashboard</span>
+              </div>
+              <button onclick="openDossierModal('EXHIBIT A // Sistem Telemetri Bendungan', 'CASE #041-HG', 'Operasi pengawasan infrastruktur hidrologi berbasis mikrokontroler ESP32 dan sensor ultrasonik presisi tinggi. Data dikirim melalui jalur terenkripsi MQTT ke pusat komando web dengan latensi di bawah 200ms.', ['ESP32', 'MQTT Broker', 'React', 'WebSocket'])"
+                class="w-full py-3 bg-noir-deep border border-noir-ivory/60 text-noir-ivory font-typewriter text-xs font-bold tracking-[0.2em] uppercase hover:bg-noir-ivory hover:text-noir-pitch transition-colors">
+                INSPECT DOSSIER &gt;
+              </button>
+            </div>
+          </article>
+
+          <!-- EXHIBIT B -->
+          <article data-category="WEB" class="exhibit-card dossier-card p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-4 text-xs">
+                <span class="px-2.5 py-1 bg-noir-charcoal border border-noir-ash text-white font-bold tracking-widest">EXHIBIT B // CASE #078</span>
+                <span class="stamp-confidential text-[10px]">VERIFIED</span>
+              </div>
+
+              <div class="h-44 mb-6 bg-noir-pitch border border-noir-ash relative overflow-hidden flex items-center justify-center p-4">
+                <div class="absolute inset-0 opacity-15" style="background-image: radial-gradient(#e8e4d9 1px, transparent 1px); background-size: 14px 14px;"></div>
+                <div class="relative z-10 text-center">
+                  <div class="text-[10px] tracking-[0.25em] text-neutral-400 mb-1">OFFLINE LEDGER // ZERO CLOUD</div>
+                  <div class="font-godfather font-black text-2xl sm:text-3xl text-white tracking-widest">THE LEDGER</div>
+                  <div class="text-[11px] text-neutral-400 mt-1.5">LOCAL-FIRST EXPENSE &amp; ASSET VAULT</div>
+                </div>
+              </div>
+
+              <h3 class="font-godfather font-bold text-xl sm:text-2xl text-white mb-2">
+                Offline-First Financial Ledger (PWA)
+              </h3>
+              <p class="text-neutral-300 text-sm leading-relaxed mb-6">
+                Buku kas digital berarsitektur <em>local-first</em> yang menyimpan seluruh catatan transaksi di dalam brankas IndexedDB perangkat pengguna. Tanpa server pihak ketiga, tanpa kebocoran data finansial.
+              </p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap gap-2 mb-6 text-[11px]">
+                <span class="px-2.5 py-0.5 bg-noir-charcoal border border-noir-ash text-noir-ivory">React</span>
+                <span class="px-2.5 py-0.5 bg-noir-charcoal border border-noir-ash text-noir-ivory">IndexedDB</span>
+                <span class="px-2.5 py-0.5 bg-noir-charcoal border border-noir-ash text-noir-ivory">Service Worker</span>
+              </div>
+              <button onclick="openDossierModal('EXHIBIT B // Offline-First Financial Ledger', 'CASE #078-LG', 'Dirancang dengan prinsip Omertà finansial. Seluruh pencatatan arus kas, laporan analitik, dan ekspor JSON/CSV dijalankan 100% secara lokal di peramban bahkan tanpa koneksi internet.', ['React', 'IndexedDB', 'PWA Offline', 'Tailwind CSS'])"
+                class="w-full py-3 bg-noir-deep border border-noir-ivory/60 text-noir-ivory font-typewriter text-xs font-bold tracking-[0.2em] uppercase hover:bg-noir-ivory hover:text-noir-pitch transition-colors">
+                INSPECT DOSSIER &gt;
+              </button>
+            </div>
+          </article>
+
+          <!-- EXHIBIT C -->
+          <article data-category="AI" class="exhibit-card dossier-card p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-4 text-xs">
+                <span class="px-2.5 py-1 bg-noir-charcoal border border-noir-ash text-white font-bold tracking-widest">EXHIBIT C // CASE #114</span>
+                <span class="stamp-confidential text-[10px]">CLASSIFIED</span>
+              </div>
+
+              <div class="h-44 mb-6 bg-noir-pitch border border-noir-ash relative overflow-hidden flex items-center justify-center p-4">
+                <div class="absolute inset-0 opacity-15" style="background-image: radial-gradient(#e8e4d9 1px, transparent 1px); background-size: 14px 14px;"></div>
+                <div class="relative z-10 text-center">
+                  <div class="text-[10px] tracking-[0.25em] text-neutral-400 mb-1">DOCUMENT INTERROGATION ENGINE</div>
+                  <div class="font-godfather font-black text-2xl sm:text-3xl text-white tracking-widest">CONSIGLIERE AI</div>
+                  <div class="text-[11px] text-neutral-400 mt-1.5">NLP SUMMARIZER &amp; ADAPTIVE TUTOR</div>
+                </div>
+              </div>
+
+              <h3 class="font-godfather font-bold text-xl sm:text-2xl text-white mb-2">
+                NLP Dossier Summarizer &amp; AI Tutor
+              </h3>
+              <p class="text-neutral-300 text-sm leading-relaxed mb-6">
+                Mesin intelijen dokumen yang membedah berkas panjang menjadi ringkasan taktis dalam hitungan detik, dilengkapi sesi tanya-jawab interaktif dan pengujian pemahaman otomatis.
+              </p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap gap-2 mb-6 text-[11px]">
+                <span class="px-2.5 py-0.5 bg-noir-charcoal border border-noir-ash text-noir-ivory">Python FastAPI</span>
+                <span class="px-2.5 py-0.5 bg-noir-charcoal border border-noir-ash text-noir-ivory">NLP / RAG</span>
+                <span class="px-2.5 py-0.5 bg-noir-charcoal border border-noir-ash text-noir-ivory">TypeScript</span>
+              </div>
+              <button onclick="openDossierModal('EXHIBIT C // NLP Dossier Summarizer & AI Tutor', 'CASE #114-AI', 'Menggunakan pemotongan konteks semantik (semantic chunking) untuk mengekstrak intisari dari dokumen akademik maupun laporan teknis secara akurat dan terstruktur.', ['Python', 'FastAPI', 'NLP Pipeline', 'TypeScript'])"
+                class="w-full py-3 bg-noir-deep border border-noir-ivory/60 text-noir-ivory font-typewriter text-xs font-bold tracking-[0.2em] uppercase hover:bg-noir-ivory hover:text-noir-pitch transition-colors">
+                INSPECT DOSSIER &gt;
+              </button>
+            </div>
+          </article>
+
+          <!-- EXHIBIT D -->
+          <article data-category="WEB" class="exhibit-card dossier-card p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-4 text-xs">
+                <span class="px-2.5 py-1 bg-noir-charcoal border border-noir-ash text-white font-bold tracking-widest">EXHIBIT D // CASE #159</span>
+                <span class="stamp-confidential text-[10px]">CLOSED</span>
+              </div>
+
+              <div class="h-44 mb-6 bg-noir-pitch border border-noir-ash relative overflow-hidden flex items-center justify-center p-4">
+                <div class="absolute inset-0 opacity-15" style="background-image: radial-gradient(#e8e4d9 1px, transparent 1px); background-size: 14px 14px;"></div>
+                <div class="relative z-10 text-center">
+                  <div class="text-[10px] tracking-[0.25em] text-neutral-400 mb-1">TACTICAL COMMERCE CATALOG</div>
+                  <div class="font-godfather font-black text-2xl sm:text-3xl text-white tracking-widest">HARBOR SUPPLY</div>
+                  <div class="text-[11px] text-neutral-400 mt-1.5">MOBILE-FIRST GEAR &amp; EQUIPMENT INDEX</div>
+                </div>
+              </div>
+
+              <h3 class="font-godfather font-bold text-xl sm:text-2xl text-white mb-2">
+                Katalog Perlengkapan Maritim &amp; Pancing
+              </h3>
+              <p class="text-neutral-300 text-sm leading-relaxed mb-6">
+                Platform katalog komersial berkecepatan tinggi yang dioptimalkan untuk akses perangkat mobile. Dilengkapi filter spesifikasi presisi dan jalur pemesanan langsung terenkripsi.
+              </p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap gap-2 mb-6 text-[11px]">
+                <span class="px-2.5 py-0.5 bg-noir-charcoal border border-noir-ash text-noir-ivory">HTML5 / JS</span>
+                <span class="px-2.5 py-0.5 bg-noir-charcoal border border-noir-ash text-noir-ivory">Tailwind CSS</span>
+                <span class="px-2.5 py-0.5 bg-noir-charcoal border border-noir-ash text-noir-ivory">Direct API</span>
+              </div>
+              <button onclick="openDossierModal('EXHIBIT D // Katalog Perlengkapan Maritim & Pancing', 'CASE #159-HS', 'Dirancang agar ringan dimuat di jaringan seluler dengan navigasi ramah ibu jari, perbandingan spesifikasi peralatan, serta pemesanan langsung.', ['HTML5', 'Tailwind CSS', 'Vanilla JS', 'Mobile UX'])"
+                class="w-full py-3 bg-noir-deep border border-noir-ivory/60 text-noir-ivory font-typewriter text-xs font-bold tracking-[0.2em] uppercase hover:bg-noir-ivory hover:text-noir-pitch transition-colors">
+                INSPECT DOSSIER &gt;
+              </button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="newspaper-rule opacity-50"></div>
+
+    <!-- =========================================================
+         SECTION IV: CONSIGLIERE DISPATCH (TELEGRAM / CONTACT)
+         ========================================================= -->
+    <section id="consigliere" class="relative py-24 sm:py-32">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-12">
+          <div class="text-xs text-neutral-400 tracking-[0.25em] uppercase mb-2">SECTION IV // PRIVATE CHANNEL</div>
+          <h2 class="font-godfather font-black text-3xl sm:text-5xl text-white tracking-wider uppercase">
+            LEAVE A <span class="text-noir-ivory">TELEGRAM</span>
+          </h2>
+          <p class="font-editorial italic text-neutral-400 text-base sm:text-lg mt-3">
+            &ldquo;Sampaikan urusan bisnis Anda melalui jalur pribadi. Kerahasiaan dijamin sepenuhnya.&rdquo;
+          </p>
+        </div>
+
+        <div class="dossier-card p-6 sm:p-10 relative">
+          <!-- Telegram Header Strip -->
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-noir-ash pb-4 mb-7 text-xs">
+            <span class="tracking-widest text-neutral-400">WESTERN UNION // PRIVATE WIRE TO: <strong class="text-white">M. FATIR</strong></span>
+            <span class="text-noir-blood font-bold tracking-widest">ENCRYPTED LINE</span>
+          </div>
+
+          <form id="telegram-form" class="space-y-6">
+            <div class="grid sm:grid-cols-2 gap-6">
+              <div>
+                <label for="sender-name" class="block text-xs text-neutral-400 tracking-widest uppercase mb-2">
+                  I. NAMA / ALIAS PENGIRIM
+                </label>
+                <input type="text" id="sender-name" required placeholder="Contoh: Don Corleone"
+                  class="w-full bg-noir-pitch border border-noir-ash focus:border-noir-ivory outline-none px-4 py-3 text-sm text-white placeholder-neutral-600 transition-colors" />
+              </div>
+
+              <div>
+                <label for="sender-email" class="block text-xs text-neutral-400 tracking-widest uppercase mb-2">
+                  II. ALAMAT BALASAN (EMAIL)
+                </label>
+                <input type="email" id="sender-email" required placeholder="consigliere@famiglia.org"
+                  class="w-full bg-noir-pitch border border-noir-ash focus:border-noir-ivory outline-none px-4 py-3 text-sm text-white placeholder-neutral-600 transition-colors" />
+              </div>
+            </div>
+
+            <div>
+              <label for="sender-topic" class="block text-xs text-neutral-400 tracking-widest uppercase mb-2">
+                III. PERIHAL URUSAN
+              </label>
+              <select id="sender-topic"
+                class="w-full bg-noir-pitch border border-noir-ash focus:border-noir-ivory outline-none px-4 py-3 text-sm text-white transition-colors">
+                <option value="SYSTEM_ARCHITECTURE">ARSITEKTUR SISTEM &amp; WEB FULL-STACK</option>
+                <option value="IOT_OPERATIONS">OPERASI IOT &amp; TELEMETRI HARDWARE</option>
+                <option value="AI_INTELLIGENCE">INTEGRASI KECERDASAN BUATAN / NLP</option>
+                <option value="PRIVATE_OFFER">TAWARAN KOLABORASI KHUSUS</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="sender-message" class="block text-xs text-neutral-400 tracking-widest uppercase mb-2">
+                IV. ISI TELEGRAM
+              </label>
+              <textarea id="sender-message" rows="4" required placeholder="Tuliskan proposal atau pesan rahasia Anda di sini..."
+                class="w-full bg-noir-pitch border border-noir-ash focus:border-noir-ivory outline-none px-4 py-3 text-sm text-white placeholder-neutral-600 transition-colors"></textarea>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+              <button type="submit" class="px-8 py-4 bg-noir-ivory text-noir-pitch font-godfather font-black text-xs sm:text-sm tracking-[0.18em] uppercase hover:bg-white transition-colors flex items-center justify-center gap-3 cursor-pointer">
+                <span class="w-3 h-3 rounded-full bg-noir-blood inline-block"></span>
+                SEAL &amp; DISPATCH
+              </button>
+
+              <button type="button" id="copy-wire-btn"
+                class="px-5 py-3.5 border border-noir-ash text-xs text-neutral-300 tracking-widest uppercase hover:border-noir-ivory hover:text-white transition-colors">
+                COPY PRIVATE WIRE ADDRESS
+              </button>
+            </div>
+          </form>
+
+          <!-- Dispatched Stamp Confirmation -->
+          <div id="telegram-status" class="hidden mt-8 p-5 bg-noir-pitch border border-noir-ivory/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div class="text-xs space-y-1">
+              <div class="text-white font-bold tracking-wider" id="dispatch-code"></div>
+              <div class="text-neutral-300" id="dispatch-detail"></div>
+            </div>
+            <span class="stamp-confidential text-xs shrink-0">DISPATCHED</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+  <footer class="relative z-10 border-t border-noir-ash bg-noir-deep py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
+      <div class="font-godfather tracking-widest text-noir-ivory">
+        MUHAMMAD FATIR <span class="text-neutral-500">// LA FAMIGLIA ARCHIVES</span>
+      </div>
+      <div class="tracking-widest">
+        OMERTÀ &bull; PRECISION &bull; 1972–2026
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       INVESTIGATION DOSSIER MODAL (NO ALERT USED)
+       ========================================================= -->
+  <div id="dossier-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/85 backdrop-blur-sm">
+    <div class="parchment-sheet max-w-lg w-full p-6 sm:p-8 relative border-2 border-noir-pitch">
+      <div class="flex items-center justify-between border-b-2 border-noir-pitch/25 pb-3 mb-4 text-xs">
+        <span id="modal-case-id" class="font-bold tracking-widest text-noir-blood"></span>
+        <button id="close-modal-btn" class="px-2.5 py-1 bg-noir-pitch text-noir-ivory font-bold hover:bg-noir-blood transition-colors">
+          [X] CLOSE FILE
+        </button>
+      </div>
+      <h3 id="modal-title" class="font-godfather font-black text-xl sm:text-2xl text-noir-pitch mb-3"></h3>
+      <p id="modal-desc" class="text-neutral-900 text-sm leading-relaxed mb-5"></p>
+      <div class="text-xs font-bold text-noir-pitch uppercase tracking-wider mb-2">ARSENAL &amp; TEKNOLOGI:</div>
+      <div id="modal-tags" class="flex flex-wrap gap-2 mb-6 text-xs"></div>
+      <button id="modal-ack-btn" class="w-full py-3 bg-noir-pitch text-noir-ivory font-godfather font-bold text-xs uppercase tracking-[0.2em] hover:bg-noir-blood transition-colors">
+        RETURN TO EVIDENCE ROOM
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       VANILLA JS: MULTI-LAYER PARALLAX ENGINE & NOIR INTERACTIONS
+       ========================================================= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      /* ---------------------------------------------------------
+         1. MULTI-LAYER PARALLAX ENGINE (SCROLL + CURSOR 3D TILT)
+      --------------------------------------------------------- */
+      const parallaxElements = document.querySelectorAll('.js-parallax');
+      const blindsLayer = document.getElementById('parallax-blinds');
+      const heroCard = document.getElementById('hero-dossier-card');
+
+      let scrollY = window.scrollY;
+      let targetMouseX = 0;
+      let targetMouseY = 0;
+      let currentMouseX = 0;
+      let currentMouseY = 0;
+
+      window.addEventListener('scroll', () => {
+        scrollY = window.scrollY;
+      }, { passive: true });
+
+      window.addEventListener('mousemove', (e) => {
+        targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        targetMouseY = (e.clientY / window.innerHeight) * 2 - 1;
+      }, { passive: true });
+
+      function animateNoirParallax() {
+        currentMouseX += (targetMouseX - currentMouseX) * 0.06;
+        currentMouseY += (targetMouseY - currentMouseY) * 0.06;
+
+        // Layer 1: Venetian Blinds gentle drift on scroll & mouse
+        if (blindsLayer) {
+          const blindY = -(scrollY * 0.12);
+          const blindX = currentMouseX * -12;
+          blindsLayer.style.transform = `translate3d(${blindX.toFixed(2)}px, ${blindY.toFixed(2)}px, 0)`;
+        }
+
+        // Layer 2 & 3: Midground Typography & Foreground Elements
+        parallaxElements.forEach((el) => {
+          const speed = parseFloat(el.getAttribute('data-parallax-speed')) || 0;
+          const mouseFactor = parseFloat(el.getAttribute('data-mouse-factor')) || 0;
+
+          const rect = el.getBoundingClientRect();
+          const elementCenterY = rect.top + rect.height / 2;
+          const viewportCenterY = window.innerHeight / 2;
+          const distanceFromCenter = elementCenterY - viewportCenterY;
+
+          const yOffset = distanceFromCenter * speed + (currentMouseY * mouseFactor);
+          const xOffset = currentMouseX * mouseFactor;
+
+          el.style.transform = `translate3d(${xOffset.toFixed(2)}px, ${yOffset.toFixed(2)}px, 0)`;
+        });
+
+        // Subtle 3D Tilt on the Hero Dossier Card
+        if (heroCard && window.innerWidth >= 1024) {
+          const rotateY = currentMouseX * 4;
+          const rotateX = -currentMouseY * 4;
+          heroCard.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+        }
+
+        requestAnimationFrame(animateNoirParallax);
+      }
+
+      requestAnimationFrame(animateNoirParallax);
+
+      /* ---------------------------------------------------------
+         2. TYPEWRITER ARCHIVE SUBTITLE
+      --------------------------------------------------------- */
+      const notes = [
+        "PRECISION WITHOUT COMPROMISE",
+        "SILENT ARCHITECTURE, MAXIMUM IMPACT",
+        "KEEP YOUR FRIENDS CLOSE, YOUR SERVERS CLOSER",
+        "BUILT UNDER THE CODE OF OMERTÀ"
+      ];
+      const typingEl = document.getElementById('hero-typing');
+      let noteIdx = 0;
+      let charIdx = 0;
+      let deleting = false;
+
+      function runTypewriter() {
+        const current = notes[noteIdx];
+        if (deleting) {
+          typingEl.textContent = current.substring(0, charIdx - 1);
+          charIdx--;
+        } else {
+          typingEl.textContent = current.substring(0, charIdx + 1);
+          charIdx++;
+        }
+
+        let delay = deleting ? 30 : 65;
+
+        if (!deleting && charIdx === current.length) {
+          delay = 2200;
+          deleting = true;
+        } else if (deleting && charIdx === 0) {
+          deleting = false;
+          noteIdx = (noteIdx + 1) % notes.length;
+          delay = 400;
+        }
+
+        setTimeout(runTypewriter, delay);
+      }
+      runTypewriter();
+
+      /* ---------------------------------------------------------
+         3. NOIR GRAIN & VENETIAN SHADOWS TOGGLE
+      --------------------------------------------------------- */
+      const noirToggleBtn = document.getElementById('noir-toggle-btn');
+      const filmGrain = document.getElementById('film-grain');
+      const noirStatusText = document.getElementById('noir-status-text');
+      const noirIndicator = document.getElementById('noir-indicator');
+      let noirFxEnabled = true;
+
+      noirToggleBtn.addEventListener('click', () => {
+        noirFxEnabled = !noirFxEnabled;
+        filmGrain.classList.toggle('noir-fx-off', !noirFxEnabled);
+        if (blindsLayer) blindsLayer.classList.toggle('noir-fx-off', !noirFxEnabled);
+        noirStatusText.textContent = noirFxEnabled ? 'NOIR FX: ON' : 'NOIR FX: OFF';
+        noirIndicator.style.backgroundColor = noirFxEnabled ? '#7a0a0a' : '#4a4a4a';
+      });
+
+      /* ---------------------------------------------------------
+         4. MOBILE MENU DRAWER
+      --------------------------------------------------------- */
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+      });
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      /* ---------------------------------------------------------
+         5. EVIDENCE EXHIBIT FILTERING
+      --------------------------------------------------------- */
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const exhibitCards = document.querySelectorAll('.exhibit-card');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => {
+            b.classList.remove('bg-noir-ivory', 'text-noir-pitch', 'border-noir-ivory', 'font-bold');
+            b.classList.add('bg-noir-deep', 'text-neutral-300', 'border-noir-ash');
+          });
+
+          btn.classList.remove('bg-noir-deep', 'text-neutral-300', 'border-noir-ash');
+          btn.classList.add('bg-noir-ivory', 'text-noir-pitch', 'border-noir-ivory', 'font-bold');
+
+          const filter = btn.getAttribute('data-filter');
+          exhibitCards.forEach(card => {
+            const cat = card.getAttribute('data-category');
+            card.style.display = (filter === 'ALL' || cat === filter) ? 'flex' : 'none';
+          });
+        });
+      });
+
+      /* ---------------------------------------------------------
+         6. TELEGRAM DISPATCH & CLIPBOARD COPY
+      --------------------------------------------------------- */
+      const telegramForm = document.getElementById('telegram-form');
+      const telegramStatus = document.getElementById('telegram-status');
+      const dispatchCode = document.getElementById('dispatch-code');
+      const dispatchDetail = document.getElementById('dispatch-detail');
+
+      telegramForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const sender = document.getElementById('sender-name').value.trim();
+        const topic = document.getElementById('sender-topic').value;
+        const wireId = 'WIRE-1972-' + Math.floor(1000 + Math.random() * 9000);
+
+        dispatchCode.textContent = `TELEGRAM SEALED // REF: ${wireId}`;
+        dispatchDetail.textContent = `Pesan dari "${sender}" [${topic}] telah dikirimkan ke meja kerja Muhammad Fatir.`;
+        telegramStatus.classList.remove('hidden');
+        telegramForm.reset();
+      });
+
+      const copyWireBtn = document.getElementById('copy-wire-btn');
+      copyWireBtn.addEventListener('click', () => {
+        const tempInput = document.createElement('input');
+        tempInput.value = 'fatir.consigliere@famiglia-archive.id';
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+
+        const original = copyWireBtn.textContent;
+        copyWireBtn.textContent = 'WIRE ADDRESS COPIED';
+        copyWireBtn.classList.add('border-noir-ivory', 'text-white');
+        setTimeout(() => {
+          copyWireBtn.textContent = original;
+          copyWireBtn.classList.remove('border-noir-ivory', 'text-white');
+        }, 2200);
+      });
+
+      /* ---------------------------------------------------------
+         7. DOSSIER MODAL CONTROLLER
+      --------------------------------------------------------- */
+      const modal = document.getElementById('dossier-modal');
+      const closeModalBtn = document.getElementById('close-modal-btn');
+      const modalAckBtn = document.getElementById('modal-ack-btn');
+
+      function closeDossierModal() {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+
+      closeModalBtn.addEventListener('click', closeDossierModal);
+      modalAckBtn.addEventListener('click', closeDossierModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeDossierModal();
+      });
+    });
+
+    function openDossierModal(title, caseId, desc, tags) {
+      const modal = document.getElementById('dossier-modal');
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-case-id').textContent = caseId + ' // VERIFIED';
+      document.getElementById('modal-desc').textContent = desc;
+
+      const tagsWrap = document.getElementById('modal-tags');
+      tagsWrap.innerHTML = '';
+      tags.forEach(tag => {
+        const badge = document.createElement('span');
+        badge.className = 'px-2.5 py-1 bg-noir-pitch text-noir-ivory font-bold';
+        badge.textContent = tag;
+        tagsWrap.appendChild(badge);
+      });
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+  </script>
+</body>
+</html>
