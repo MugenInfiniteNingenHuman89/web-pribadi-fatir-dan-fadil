@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FADILLAH SURYA SAPUTRA // TKRO AUTOMOTIVE &amp; ECU DIAGNOSTICS [v2.077]</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Orbitron (Cyber Display), JetBrains Mono (ECU Telemetry/Terminal), Space Grotesk (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Orbitron:wght@600;700;800;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind Theme Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              black: '#05050a',
+              dark: '#0c0c16',
+              card: '#121222',
+              yellow: '#fcee0a',
+              cyan: '#00f0ff',
+              pink: '#ff003c',
+              purple: '#b829ea',
+              grid: '#1d1d35'
+            }
+          },
+          fontFamily: {
+            display: ['Orbitron', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            sans: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* =========================================
+       CYBERPUNK & NEO-BRUTALISM CUSTOM STYLES
+       ========================================= */
+    :root {
+      --cyber-black: #05050a;
+      --cyber-dark: #0c0c16;
+      --cyber-yellow: #fcee0a;
+      --cyber-cyan: #00f0ff;
+      --cyber-pink: #ff003c;
+    }
+
+    body {
+      background-color: var(--cyber-black);
+      color: #e2e8f0;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--cyber-yellow);
+      color: var(--cyber-black);
+    }
+
+    /* Custom Cyber Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #05050a;
+      border-left: 1px solid #1d1d35;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #00f0ff;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #fcee0a;
+    }
+
+    /* CRT Scanlines Overlay */
+    .crt-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.22) 0px,
+        rgba(0, 0, 0, 0.22) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      transition: opacity 0.3s ease;
+    }
+
+    .crt-off {
+      opacity: 0 !important;
+    }
+
+    /* Cyber Perspective Grid */
+    .cyber-grid {
+      background-size: 48px 48px;
+      background-image:
+        linear-gradient(to right, rgba(0, 240, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 240, 255, 0.08) 1px, transparent 1px);
+    }
+
+    /* Chamfered / Angled Cyberpunk Corner Clip */
+    .cyber-chamfer {
+      clip-path: polygon(
+        0 0,
+        calc(100% - 18px) 0,
+        100% 18px,
+        100% 100%,
+        18px 100%,
+        0 calc(100% - 18px)
+      );
+    }
+
+    .cyber-chamfer-sm {
+      clip-path: polygon(
+        0 0,
+        calc(100% - 10px) 0,
+        100% 10px,
+        100% 100%,
+        10px 100%,
+        0 calc(100% - 10px)
+      );
+    }
+
+    /* Neo-Brutalism Cards & Hard Shadows */
+    .brutal-card {
+      background-color: #0e0e1a;
+      border: 2px solid #282846;
+      box-shadow: 6px 6px 0px #00f0ff;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .brutal-card:hover {
+      transform: translate(-3px, -3px);
+      border-color: #fcee0a;
+      box-shadow: 9px 9px 0px #fcee0a;
+    }
+
+    .brutal-card-pink {
+      background-color: #0e0e1a;
+      border: 2px solid #ff003c;
+      box-shadow: 6px 6px 0px #ff003c;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .brutal-card-pink:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0px #00f0ff;
+      border-color: #00f0ff;
+    }
+
+    /* Cyber Glitch Text Effect */
+    .glitch-text {
+      position: relative;
+      display: inline-block;
+    }
+    .glitch-text::before,
+    .glitch-text::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.8;
+    }
+    .glitch-text::before {
+      color: #00f0ff;
+      z-index: -1;
+      animation: glitch-anim-1 3s infinite linear alternate-reverse;
+    }
+    .glitch-text::after {
+      color: #ff003c;
+      z-index: -2;
+      animation: glitch-anim-2 2.4s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim-1 {
+      0%, 90% { transform: translate(0); }
+      92% { transform: translate(-3px, 1px); }
+      94% { transform: translate(3px, -1px); }
+      96% { transform: translate(-2px, -2px); }
+      100% { transform: translate(0); }
+    }
+
+    @keyframes glitch-anim-2 {
+      0%, 88% { transform: translate(0); }
+      90% { transform: translate(3px, 2px); }
+      93% { transform: translate(-3px, -1px); }
+      97% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
+    }
+
+    /* Terminal Cursor Blink */
+    .cursor-blink {
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* GPU Acceleration for Parallax Layers */
+    .parallax-layer {
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased relative selection:bg-cyber-yellow selection:text-cyber-black">
+
+  <!-- CRT Scanlines Overlay -->
+  <div id="crt-overlay" class="crt-overlay" aria-hidden="true"></div>
+
+  <!-- =========================================================
+       PARALLAX LAYER 1 (DEEP BACKGROUND): CYBER GRID & NEON ORBS
+       ========================================================= -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+    <!-- Moving Cyber Grid -->
+    <div id="parallax-grid" class="parallax-layer absolute -inset-24 cyber-grid opacity-80"></div>
+
+    <!-- Ambient Neon Orbs -->
+    <div id="parallax-orb-1" class="parallax-layer absolute top-16 -left-24 w-[440px] h-[440px] rounded-full bg-cyber-cyan/15 blur-[120px]"></div>
+    <div id="parallax-orb-2" class="parallax-layer absolute bottom-10 -right-24 w-[480px] h-[480px] rounded-full bg-cyber-pink/15 blur-[130px]"></div>
+    <div id="parallax-orb-3" class="parallax-layer absolute top-1/2 left-1/3 w-[360px] h-[360px] rounded-full bg-cyber-yellow/10 blur-[140px]"></div>
+
+    <!-- Edge Vignette -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,#05050a_96%)]"></div>
+  </div>
+
+  <!-- =========================================================
+       TOP CYBERPUNK NAVIGATION BAR
+       ========================================================= -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-cyber-black/90 backdrop-blur-md border-b-2 border-cyber-cyan/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+      
+      <!-- Brand / Garage Identity -->
+      <a href="#hero" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 bg-cyber-yellow text-cyber-black font-display font-black text-sm flex items-center justify-center cyber-chamfer-sm border-2 border-cyber-black shadow-[3px_3px_0px_#ff003c] group-hover:bg-cyber-cyan transition-colors">
+          FSS
+        </div>
+        <div>
+          <span class="font-display font-extrabold text-white tracking-wider text-sm sm:text-base block">
+            SURYA<span class="text-cyber-yellow">.AUTO</span>
+          </span>
+          <span class="font-mono text-[10px] text-cyber-cyan tracking-widest uppercase block">
+            TKRO // ECU_DIAGNOSTICS
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center gap-7 font-mono text-xs tracking-widest uppercase">
+        <a href="#about" class="text-slate-300 hover:text-cyber-yellow transition-colors">01.ABOUT</a>
+        <a href="#skills" class="text-slate-300 hover:text-cyber-cyan transition-colors">02.ARSENAL</a>
+        <a href="#projects" class="text-slate-300 hover:text-cyber-pink transition-colors">03.BUILDS</a>
+        <a href="#experience" class="text-slate-300 hover:text-cyber-yellow transition-colors">04.PKL_LOG</a>
+        <a href="#contact" class="text-slate-300 hover:text-cyber-cyan transition-colors">05.CONNECT</a>
+      </nav>
+
+      <!-- Controls: CRT Toggle & Mobile Drawer -->
+      <div class="flex items-center gap-2.5">
+        <button id="crt-toggle-btn" title="Aktifkan/Matikan Efek Scanlines CRT"
+          class="font-mono text-[11px] font-bold px-3 py-1.5 border-2 border-cyber-cyan bg-cyber-dark text-cyber-cyan hover:bg-cyber-cyan hover:text-cyber-black transition-colors flex items-center gap-2 cursor-pointer">
+          <span id="crt-led" class="w-2 h-2 rounded-full bg-cyber-yellow animate-pulse inline-block"></span>
+          <span id="crt-status">CRT: ON</span>
+        </button>
+
+        <button id="mobile-menu-btn" aria-label="Buka Menu"
+          class="lg:hidden p-2 border-2 border-cyber-yellow text-cyber-yellow hover:bg-cyber-yellow hover:text-cyber-black transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="square" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-cyber-dark border-b-2 border-cyber-yellow px-4 py-4 space-y-2.5 font-mono text-xs tracking-widest uppercase">
+      <a href="#about" class="mobile-nav-link block py-2.5 px-3 border border-slate-700 hover:border-cyber-yellow hover:text-cyber-yellow">01 // ABOUT &amp; METRICS</a>
+      <a href="#skills" class="mobile-nav-link block py-2.5 px-3 border border-slate-700 hover:border-cyber-cyan hover:text-cyber-cyan">02 // AUTOMOTIVE ARSENAL</a>
+      <a href="#projects" class="mobile-nav-link block py-2.5 px-3 border border-slate-700 hover:border-cyber-pink hover:text-cyber-pink">03 // DEPLOYED BUILDS</a>
+      <a href="#experience" class="mobile-nav-link block py-2.5 px-3 border border-slate-700 hover:border-cyber-yellow hover:text-cyber-yellow">04 // WORK EXPERIENCE &amp; PKL</a>
+      <a href="#contact" class="mobile-nav-link block py-2.5 px-3 border border-slate-700 hover:border-cyber-cyan hover:text-cyber-cyan">05 // ESTABLISH CONNECTION</a>
+    </div>
+  </header>
+
+  <main class="relative z-10">
+
+    <!-- =========================================================
+         HERO SECTION: CYBERPUNK AUTOMOTIVE ENGINEER
+         ========================================================= -->
+    <section id="hero" class="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden">
+
+      <!-- PARALLAX LAYER 2 (MIDGROUND): Giant Transparent Watermark & Telemetry HUD -->
+      <div class="absolute inset-0 pointer-events-none overflow-hidden select-none" aria-hidden="true">
+        <div data-parallax-speed="0.22" data-mouse-factor="16" class="js-parallax parallax-layer absolute top-[18%] -left-6 opacity-[0.045] whitespace-nowrap">
+          <span class="font-display font-black text-[100px] sm:text-[180px] tracking-widest text-cyber-cyan">
+            TKRO // OBD-II
+          </span>
+        </div>
+
+        <div data-parallax-speed="-0.18" data-mouse-factor="-18" class="js-parallax parallax-layer absolute bottom-[12%] -right-8 opacity-[0.045] whitespace-nowrap">
+          <span class="font-display font-black text-[95px] sm:text-[170px] tracking-widest text-cyber-yellow">
+            SURYA SAPUTRA
+          </span>
+        </div>
+
+        <!-- Floating Piston / Gear Telemetry Wireframe SVG -->
+        <div data-parallax-speed="0.15" data-mouse-factor="26" class="js-parallax parallax-layer absolute top-32 right-[8%] opacity-30 hidden md:block">
+          <svg class="w-44 h-44 text-cyber-yellow" viewBox="0 0 140 140" fill="none">
+            <circle cx="70" cy="70" r="60" stroke="currentColor" stroke-width="1.2" stroke-dasharray="6 4"/>
+            <circle cx="70" cy="70" r="42" stroke="#00f0ff" stroke-width="1"/>
+            <polygon points="70,18 115,44 115,96 70,122 25,96 25,44" stroke="#ff003c" stroke-width="1" fill="none"/>
+            <circle cx="70" cy="70" r="8" fill="#fcee0a"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- PARALLAX LAYER 3 (FOREGROUND): Hero Content & Diagnostic ID Card -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+
+          <!-- Left Column: Glitch Name, Terminal Bio & CTA -->
+          <div data-parallax-speed="-0.04" data-mouse-factor="-8" class="js-parallax parallax-layer lg:col-span-7 space-y-6">
+            
+            <!-- Status Tag -->
+            <div class="inline-flex flex-wrap items-center gap-2.5 px-3.5 py-1.5 bg-cyber-dark border-2 border-cyber-cyan font-mono text-xs tracking-wider shadow-[4px_4px_0px_#ff003c]">
+              <span class="w-2.5 h-2.5 rounded-full bg-cyber-yellow animate-ping"></span>
+              <span class="text-cyber-cyan font-bold">SYS.ONLINE</span>
+              <span class="text-slate-500">//</span>
+              <span class="text-white">SMK TKRO &amp; MODERN DIAGNOSTICS</span>
+            </div>
+
+            <!-- Main Heading -->
+            <div>
+              <p class="font-mono text-xs sm:text-sm text-cyber-yellow tracking-[0.2em] uppercase mb-2">
+                &gt; OPERATOR_ID: @suryasaputra_auto // SURAKARTA, ID
+              </p>
+              <h1 class="font-display font-black text-4xl sm:text-6xl lg:text-[62px] text-white leading-[1.06] tracking-wide uppercase">
+                FADILLAH <br/>
+                <span class="glitch-text text-cyber-yellow" data-text="SURYA SAPUTRA">SURYA SAPUTRA</span>
+              </h1>
+            </div>
+
+            <!-- Role Subtitle -->
+            <p class="font-mono text-sm sm:text-lg text-cyber-cyan font-bold">
+              [ TEKNISI OTOMOTIF TKRO &bull; ECU DIAGNOSTICS &bull; ELECTRICAL MOD ]
+            </p>
+
+            <!-- Terminal Bio Box -->
+            <div class="bg-cyber-dark/90 border-l-4 border-cyber-pink p-4 sm:p-5 font-mono text-xs sm:text-sm text-slate-300 space-y-2 max-w-2xl">
+              <div class="text-cyber-pink font-bold">
+                root@surya-garage:~$ <span id="hero-typing" class="text-white"></span><span class="cursor-blink text-cyber-yellow">█</span>
+              </div>
+              <p class="leading-relaxed text-slate-300">
+                Lulusan <strong class="text-white">SMK Teknik Kendaraan Ringan Otomotif (TKRO)</strong> yang menggabungkan presisi mekanik konvensional dengan teknologi diagnostik elektronik modern—mulai dari <span class="text-cyber-cyan">OBD-II Scanner</span>, kelistrikan bodi &amp; EFI, hingga <em>tune-up</em> performa mesin dan modifikasi sistem penerangan.
+              </p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <a href="#projects" class="px-7 py-3.5 bg-cyber-yellow text-cyber-black font-display font-black text-xs sm:text-sm tracking-widest uppercase cyber-chamfer-sm hover:bg-cyber-cyan transition-colors shadow-[5px_5px_0px_#ff003c]">
+                INSPECT BUILDS &gt;
+              </a>
+              <a href="#contact" class="px-7 py-3.5 bg-cyber-dark text-white border-2 border-cyber-cyan font-mono font-bold text-xs sm:text-sm tracking-widest uppercase hover:bg-cyber-cyan hover:text-cyber-black transition-colors">
+                ESTABLISH_COMMS
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Cyber Mechanic ID / ECU Telemetry Card -->
+          <div data-parallax-speed="0.08" data-mouse-factor="15" class="js-parallax parallax-layer lg:col-span-5">
+            <div id="hero-mech-card" class="brutal-card p-6 sm:p-7 relative">
+              <!-- Card Top Header -->
+              <div class="flex items-center justify-between border-b-2 border-slate-800 pb-3 mb-5 font-mono text-xs">
+                <span class="text-cyber-cyan font-bold">MECH_PASS // #TKRO-2077</span>
+                <span class="px-2 py-0.5 bg-cyber-pink text-white font-bold text-[10px]">CERTIFIED TECH</span>
+              </div>
+
+              <!-- Cyber Automotive HUD Graphic -->
+              <div class="bg-cyber-black border-2 border-slate-800 p-4 mb-5 relative overflow-hidden">
+                <div class="flex items-center justify-between font-mono text-[10px] text-slate-400 mb-3">
+                  <span>ECU_LINK: <strong class="text-cyber-yellow">CONNECTED</strong></span>
+                  <span>VOLT: <strong class="text-cyber-cyan">14.2V</strong></span>
+                  <span>RPM: <strong class="text-cyber-pink">850 IDLE</strong></span>
+                </div>
+
+                <!-- Vector Engine / Piston & OBD Telemetry Illustration -->
+                <div class="h-40 flex items-center justify-center relative">
+                  <svg viewBox="0 0 260 140" class="w-full h-full">
+                    <!-- Grid Lines -->
+                    <line x1="0" y1="70" x2="260" y2="70" stroke="#1d1d35" stroke-width="1"/>
+                    <line x1="130" y1="0" x2="130" y2="140" stroke="#1d1d35" stroke-width="1"/>
+                    <!-- Stylized V-Engine / Piston Block -->
+                    <rect x="85" y="34" width="90" height="68" rx="4" fill="#121222" stroke="#00f0ff" stroke-width="2"/>
+                    <!-- Twin Pistons -->
+                    <rect x="98" y="20" width="24" height="22" fill="#fcee0a" stroke="#05050a" stroke-width="1.5"/>
+                    <rect x="138" y="26" width="24" height="22" fill="#00f0ff" stroke="#05050a" stroke-width="1.5"/>
+                    <!-- Crankshaft Circle -->
+                    <circle cx="130" cy="76" r="18" fill="#05050a" stroke="#ff003c" stroke-width="2.5"/>
+                    <circle cx="130" cy="76" r="6" fill="#fcee0a"/>
+                    <!-- Diagnostic Pulse Wave -->
+                    <polyline points="12,115 55,115 68,95 80,128 94,104 106,115 248,115" fill="none" stroke="#00f0ff" stroke-width="2"/>
+                  </svg>
+                </div>
+
+                <div class="mt-2 bg-cyber-yellow text-cyber-black font-mono font-extrabold text-center py-1 text-xs tracking-widest">
+                  SURYA SAPUTRA // TKRO SPECIALIST
+                </div>
+              </div>
+
+              <!-- Mechanic Telemetry Specs -->
+              <div class="space-y-2 font-mono text-xs border-b-2 border-slate-800 pb-4 mb-4">
+                <div class="flex justify-between">
+                  <span class="text-slate-400">NAMA LENGKAP:</span>
+                  <span class="text-white font-bold">Fadillah Surya Saputra</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">JURUSAN:</span>
+                  <span class="text-cyber-cyan">SMK Teknik Kendaraan Ringan</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">BASE GARAGE:</span>
+                  <span class="text-white">Surakarta, Jawa Tengah</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">STATUS:</span>
+                  <span class="text-cyber-yellow font-bold">READY FOR WORK / COLLAB</span>
+                </div>
+              </div>
+
+              <!-- Bottom Barcode & Status -->
+              <div class="flex items-center justify-between font-mono text-[10px] text-slate-400">
+                <span>DTC_CODES: 0 ERRORS</span>
+                <span class="text-cyber-cyan font-bold">||| || |||| | ||| FSS-01</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SECTION 01: ABOUT & WORKSHOP METRICS
+         ========================================================= -->
+    <section id="about" class="relative py-24 border-t-2 border-slate-800/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="mb-12">
+          <span class="font-mono text-xs text-cyber-pink tracking-[0.25em] uppercase block mb-2">01 // DIAGNOSTIC_PROFILE</span>
+          <h2 class="font-display font-black text-3xl sm:text-5xl text-white uppercase tracking-wide">
+            ABOUT &amp; <span class="text-cyber-yellow">WORKSHOP METRICS</span>
+          </h2>
+        </div>
+
+        <div class="grid lg:grid-cols-12 gap-10 items-start">
+          
+          <!-- Bio Narrative Card -->
+          <div class="lg:col-span-7 brutal-card p-6 sm:p-8 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 font-mono text-xs">
+              <span class="text-cyber-yellow font-bold">// BIODATA_TEKNISI.LOG</span>
+              <span class="text-slate-400">SURAKARTA_SECTOR</span>
+            </div>
+
+            <p class="text-slate-200 text-base leading-relaxed">
+              Halo! Saya <strong class="text-cyber-yellow">Fadillah Surya Saputra</strong> (akrab dipanggil <strong class="text-white">Surya Saputra</strong>), teknisi otomotif lulusan <strong>SMK Teknik Kendaraan Ringan Otomotif (TKRO)</strong> di Surakarta. Saya memiliki ketertarikan mendalam pada perpaduan rekayasa mekanik presisi dan sistem elektronik kendaraan modern.
+            </p>
+            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+              Selama menjalani <strong class="text-cyber-cyan">Praktik Kerja Lapangan (PKL)</strong> di bengkel resmi maupun bengkel spesialis umum, saya terbiasa menangani perawatan berkala (<em>periodic maintenance</em>), <em>troubleshooting</em> mesin bensin &amp; diesel, pembacaan kode kerusakan ECU menggunakan <strong>OBD-II Scanner</strong>, serta perawatan sistem rem dan kaki-kaki sesuai SOP pabrikan.
+            </p>
+            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+              Di luar pekerjaan mekanis, saya juga aktif merakit jalur kelistrikan modifikasi yang rapi dan aman—seperti instalasi <em>relay set</em> mandiri dan <em>retrofit</em> lampu proyektor Biled tanpa membebani kelistrikan standar kendaraan.
+            </p>
+          </div>
+
+          <!-- 4 Workshop Metrics Grid -->
+          <div data-parallax-speed="-0.05" data-mouse-factor="10" class="js-parallax parallax-layer lg:col-span-5 grid grid-cols-2 gap-4 sm:gap-5">
+            
+            <div class="bg-cyber-dark border-2 border-cyber-yellow p-5 shadow-[5px_5px_0px_#fcee0a]">
+              <div class="font-display font-black text-3xl sm:text-4xl text-cyber-yellow mb-1">50+</div>
+              <div class="font-mono text-xs text-white font-bold uppercase">UNIT SERVIS &amp; TUNE-UP</div>
+              <p class="font-mono text-[11px] text-slate-400 mt-2">Perawatan berkala, ganti oli, busi, filter &amp; kalibrasi mesin.</p>
+            </div>
+
+            <div class="bg-cyber-dark border-2 border-cyber-cyan p-5 shadow-[5px_5px_0px_#00f0ff]">
+              <div class="font-display font-black text-3xl sm:text-4xl text-cyber-cyan mb-1">100%</div>
+              <div class="font-mono text-xs text-white font-bold uppercase">AKURASI DIAGNOSA OBD-II</div>
+              <p class="font-mono text-[11px] text-slate-400 mt-2">Pembacaan DTC, live data sensor &amp; reset sistem ECU.</p>
+            </div>
+
+            <div class="bg-cyber-dark border-2 border-cyber-pink p-5 shadow-[5px_5px_0px_#ff003c]">
+              <div class="font-display font-black text-3xl sm:text-4xl text-cyber-pink mb-1">6 BLN</div>
+              <div class="font-mono text-xs text-white font-bold uppercase">PKL BENGKEL RESMI</div>
+              <p class="font-mono text-[11px] text-slate-400 mt-2">Pengalaman kerja lapangan berstandar SOP &amp; K3 bengkel.</p>
+            </div>
+
+            <div class="bg-cyber-dark border-2 border-white p-5 shadow-[5px_5px_0px_#b829ea]">
+              <div class="font-display font-black text-3xl sm:text-4xl text-white mb-1">10+</div>
+              <div class="font-mono text-xs text-cyber-yellow font-bold uppercase">PROYEK KELISTRIKAN &amp; MOD</div>
+              <p class="font-mono text-[11px] text-slate-400 mt-2">Perakitan relay harness, Biled retrofit &amp; audio ringan.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SECTION 02: AUTOMOTIVE TECH ARSENAL (SKILLS)
+         ========================================================= -->
+    <section id="skills" class="relative py-24 border-t-2 border-slate-800/80 bg-cyber-dark/40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="mb-12">
+          <span class="font-mono text-xs text-cyber-cyan tracking-[0.25em] uppercase block mb-2">02 // TECHNICAL_CAPABILITIES</span>
+          <h2 class="font-display font-black text-3xl sm:text-5xl text-white uppercase tracking-wide">
+            AUTOMOTIVE <span class="text-cyber-cyan">ARSENAL</span>
+          </h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          
+          <!-- Pillar 1: Engine & Powertrain -->
+          <div class="brutal-card p-6 sm:p-7 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-5 font-mono text-xs">
+                <span class="text-cyber-yellow font-bold">MODULE_01</span>
+                <span class="text-slate-400">MECHANICAL</span>
+              </div>
+              <h3 class="font-display font-extrabold text-xl text-white mb-2">ENGINE &amp; POWERTRAIN</h3>
+              <p class="font-mono text-xs text-slate-400 mb-6">Perawatan, pembongkaran &amp; penyetelan tenaga penggerak.</p>
+
+              <div class="space-y-4 font-mono text-xs">
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-white">Overhaul Mesin Bensin &amp; Diesel</span>
+                    <span class="text-cyber-yellow font-bold">92%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-800">
+                    <div class="h-full bg-cyber-yellow" style="width: 92%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-white">Tune-Up EFI &amp; Throttle Body</span>
+                    <span class="text-cyber-yellow font-bold">95%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-800">
+                    <div class="h-full bg-cyber-yellow" style="width: 95%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-white">Transmisi Manual &amp; Matic (CVT/AT)</span>
+                    <span class="text-cyber-yellow font-bold">86%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-800">
+                    <div class="h-full bg-cyber-yellow" style="width: 86%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-white">Sistem Pendingin &amp; Pelumasan</span>
+                    <span class="text-cyber-yellow font-bold">94%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-800">
+                    <div class="h-full bg-cyber-yellow" style="width: 94%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Electrical & Diagnostics -->
+          <div class="brutal-card-pink p-6 sm:p-7 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-5 font-mono text-xs">
+                <span class="text-cyber-pink font-bold">MODULE_02</span>
+                <span class="text-slate-400">ELECTRONICS</span>
+              </div>
+              <h3 class="font-display font-extrabold text-xl text-white mb-2">ELECTRICAL &amp; DIAGNOSTICS</h3>
+              <p class="font-mono text-xs text-slate-400 mb-6">Pemindaian sensor ECU, pengapian &amp; kelistrikan bodi.</p>
+
+              <div class="space-y-4 font-mono text-xs">
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-white">Scan Tool OBD-II &amp; Reset DTC</span>
+                    <span class="text-cyber-pink font-bold">94%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-800">
+                    <div class="h-full bg-cyber-pink" style="width: 94%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-white">Pembacaan Wiring Diagram</span>
+                    <span class="text-cyber-pink font-bold">90%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-800">
+                    <div class="h-full bg-cyber-pink" style="width: 90%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-white">Sistem Pengapian, Starter &amp; Alternator</span>
+                    <span class="text-cyber-pink font-bold">91%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-800">
+                    <div class="h-full bg-cyber-pink" style="width: 91%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-white">Instalasi Biled Projector &amp; Audio</span>
+                    <span class="text-cyber-pink font-bold">89%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-800">
+                    <div class="h-full bg-cyber-pink" style="width: 89%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pillar 3: Chassis, Brake & Workshop Tools -->
+          <div class="brutal-card p-6 sm:p-7 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-5 font-mono text-xs">
+                <span class="text-cyber-cyan font-bold">MODULE_03</span>
+                <span class="text-slate-400">CHASSIS &amp; TOOLS</span>
+              </div>
+              <h3 class="font-display font-extrabold text-xl text-white mb-2">CHASSIS, BRAKE &amp; TOOLS</h3>
+              <p class="font-mono text-xs text-slate-400 mb-6">Kestabilan kaki-kaki, pengereman &amp; alat ukur presisi.</p>
+
+              <div class="space-y-4 font-mono text-xs">
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-white">Sistem Rem ABS &amp; Hidrolik</span>
+                    <span class="text-cyber-cyan font-bold">93%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-800">
+                    <div class="h-full bg-cyber-cyan" style="width: 93%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-white">Suspensi, Kemudi &amp; Spooring/Balancing</span>
+                    <span class="text-cyber-cyan font-bold">88%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-800">
+                    <div class="h-full bg-cyber-cyan" style="width: 88%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-white">Micrometer, Dial Bore &amp; Vernier Caliper</span>
+                    <span class="text-cyber-cyan font-bold">92%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-800">
+                    <div class="h-full bg-cyber-cyan" style="width: 92%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-white">Digital Multimeter &amp; Torque Wrench</span>
+                    <span class="text-cyber-cyan font-bold">95%</span>
+                  </div>
+                  <div class="w-full h-2 bg-slate-800">
+                    <div class="h-full bg-cyber-cyan" style="width: 95%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SECTION 03: DEPLOYED BUILDS & AUTOMOTIVE PROJECTS
+         ========================================================= -->
+    <section id="projects" class="relative py-24 border-t-2 border-slate-800/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <span class="font-mono text-xs text-cyber-yellow tracking-[0.25em] uppercase block mb-2">03 // GARAGE_CASE_LOGS</span>
+            <h2 class="font-display font-black text-3xl sm:text-5xl text-white uppercase tracking-wide">
+              DEPLOYED <span class="text-cyber-pink">BUILDS</span>
+            </h2>
+          </div>
+
+          <!-- Category Filter Buttons -->
+          <div class="flex flex-wrap gap-2 font-mono text-xs" id="project-filters">
+            <button data-filter="ALL_BUILDS" class="filter-btn active px-4 py-2 border-2 border-cyber-yellow bg-cyber-yellow text-cyber-black font-extrabold tracking-wider transition-colors cursor-pointer">
+              ALL_BUILDS
+            </button>
+            <button data-filter="ENGINE_TUNEUP" class="filter-btn px-4 py-2 border-2 border-slate-700 bg-cyber-dark text-slate-300 hover:border-cyber-cyan hover:text-cyber-cyan tracking-wider transition-colors cursor-pointer">
+              ENGINE_TUNEUP
+            </button>
+            <button data-filter="ELECTRICAL_ECU" class="filter-btn px-4 py-2 border-2 border-slate-700 bg-cyber-dark text-slate-300 hover:border-cyber-pink hover:text-cyber-pink tracking-wider transition-colors cursor-pointer">
+              ELECTRICAL_ECU
+            </button>
+            <button data-filter="CHASSIS_MOD" class="filter-btn px-4 py-2 border-2 border-slate-700 bg-cyber-dark text-slate-300 hover:border-cyber-yellow hover:text-cyber-yellow tracking-wider transition-colors cursor-pointer">
+              CHASSIS_MOD
+            </button>
+          </div>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="grid md:grid-cols-2 gap-8">
+
+          <!-- BUILD 1: ENGINE_TUNEUP -->
+          <article data-category="ENGINE_TUNEUP" class="project-card brutal-card p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-4 font-mono text-xs">
+                <span class="px-2.5 py-1 bg-cyber-yellow text-cyber-black font-extrabold">ENGINE_TUNEUP</span>
+                <span class="text-slate-400">BUILD_ID // #ENG-01</span>
+              </div>
+
+              <!-- Visual Blueprint Box -->
+              <div class="h-40 mb-5 bg-cyber-black border-2 border-slate-800 relative overflow-hidden flex items-center justify-center p-4">
+                <div class="absolute inset-0 cyber-grid opacity-50"></div>
+                <div class="relative z-10 text-center">
+                  <div class="font-mono text-[10px] text-cyber-cyan tracking-widest mb-1">CYLINDER HEAD &amp; VALVE CALIBRATION</div>
+                  <div class="font-display font-black text-2xl text-white">EFI 1.5L OVERHAUL</div>
+                  <div class="font-mono text-[11px] text-cyber-yellow mt-1">COMPRESSION: 13.5 BAR // BALANCED</div>
+                </div>
+              </div>
+
+              <h3 class="font-display font-bold text-xl text-white mb-2">
+                Overhaul &amp; Tune-Up Mesin EFI 1.5L
+              </h3>
+              <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                Pembongkaran dan perakitan ulang kepala silinder, penyetelan celah katup (<em>valve clearance</em>), pembersihan kerak ruang bakar, <em>throttle body</em> &amp; injektor, serta pengujian tekanan kompresi tiap silinder.
+              </p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap gap-2 mb-6 font-mono text-[11px]">
+                <span class="px-2.5 py-1 bg-cyber-black border border-cyber-cyan/50 text-cyber-cyan">Feeler Gauge</span>
+                <span class="px-2.5 py-1 bg-cyber-black border border-cyber-cyan/50 text-cyber-cyan">Torque Wrench</span>
+                <span class="px-2.5 py-1 bg-cyber-black border border-cyber-cyan/50 text-cyber-cyan">Compression Tester</span>
+              </div>
+              <button onclick="openBuildModal(
+                'Overhaul & Tune-Up Mesin EFI 1.5L',
+                'BUILD #ENG-01 // ENGINE_TUNEUP',
+                'Melakukan pembongkaran kepala silinder, skir katup (valve lapping), pengukuran kerataan permukaan blok dengan straight edge & feeler gauge, pembersihan throttle body serta kalibrasi putaran idle.',
+                ['Feeler Gauge', 'Torque Wrench', 'Compression Tester', 'Injector Cleaner'],
+                'Tekanan kompresi kembali merata di angka 13.2 - 13.5 Bar pada ke-4 silinder, suara mesin halus tanpa knocking, dan respons akselerasi meningkat signifikan.'
+              )"
+                class="w-full py-3 bg-cyber-dark border-2 border-cyber-yellow text-cyber-yellow font-mono text-xs font-extrabold tracking-widest uppercase hover:bg-cyber-yellow hover:text-cyber-black transition-colors cursor-pointer">
+                INSPECT TECHNICAL SPECS &gt;
+              </button>
+            </div>
+          </article>
+
+          <!-- BUILD 2: ELECTRICAL_ECU -->
+          <article data-category="ELECTRICAL_ECU" class="project-card brutal-card-pink p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-4 font-mono text-xs">
+                <span class="px-2.5 py-1 bg-cyber-pink text-white font-extrabold">ELECTRICAL_ECU</span>
+                <span class="text-slate-400">BUILD_ID // #ECU-02</span>
+              </div>
+
+              <div class="h-40 mb-5 bg-cyber-black border-2 border-slate-800 relative overflow-hidden flex items-center justify-center p-4">
+                <div class="absolute inset-0 cyber-grid opacity-50"></div>
+                <div class="relative z-10 text-center">
+                  <div class="font-mono text-[10px] text-cyber-pink tracking-widest mb-1">DTC FAULT ISOLATION // P0171 &amp; P0300</div>
+                  <div class="font-display font-black text-2xl text-white">OBD-II ECU DIAGNOSTIC</div>
+                  <div class="font-mono text-[11px] text-cyber-cyan mt-1">MAP / TPS / CKP VOLTAGE VERIFIED</div>
+                </div>
+              </div>
+
+              <h3 class="font-display font-bold text-xl text-white mb-2">
+                Diagnosa Sensor &amp; Wiring System via OBD-II
+              </h3>
+              <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                <em>Troubleshooting</em> kode kerusakan mesin <strong>DTC P0171 (System Too Lean)</strong> dan <strong>P0300 (Random Misfire)</strong> dengan pelacakan jalur kabel (<em>wiring harness</em>) serta pengukuran tegangan referensi sensor MAP, TPS, dan CKP.
+              </p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap gap-2 mb-6 font-mono text-[11px]">
+                <span class="px-2.5 py-1 bg-cyber-black border border-cyber-pink/50 text-cyber-pink">OBD-II Scanner</span>
+                <span class="px-2.5 py-1 bg-cyber-black border border-cyber-pink/50 text-cyber-pink">Digital Multimeter</span>
+                <span class="px-2.5 py-1 bg-cyber-black border border-cyber-pink/50 text-cyber-pink">Wiring Diagram</span>
+              </div>
+              <button onclick="openBuildModal(
+                'Diagnosa Kerusakan Sensor & Wiring System via OBD-II',
+                'BUILD #ECU-02 // ELECTRICAL_ECU',
+                'Membaca freeze-frame data dan live stream sensor melalui OBD-II Scanner. Ditemukan kebocoran vakum pada selang intake serta soket sensor MAP teroksidasi. Dilakukan pembersihan konektor, penggantian selang vakum, dan verifikasi tegangan output 5V.',
+                ['OBD-II Diagnostic Scanner', 'Digital Multimeter', 'Wiring Manual Book', 'Contact Cleaner'],
+                'Kode error DTC P0171 & P0300 terhapus permanen, Short Term Fuel Trim (STFT) stabil di kisaran ±2%, dan lampu Check Engine padam normal.'
+              )"
+                class="w-full py-3 bg-cyber-dark border-2 border-cyber-pink text-cyber-pink font-mono text-xs font-extrabold tracking-widest uppercase hover:bg-cyber-pink hover:text-white transition-colors cursor-pointer">
+                INSPECT TECHNICAL SPECS &gt;
+              </button>
+            </div>
+          </article>
+
+          <!-- BUILD 3: CHASSIS_MOD -->
+          <article data-category="CHASSIS_MOD" class="project-card brutal-card p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-4 font-mono text-xs">
+                <span class="px-2.5 py-1 bg-cyber-cyan text-cyber-black font-extrabold">CHASSIS_MOD</span>
+                <span class="text-slate-400">BUILD_ID // #CHS-03</span>
+              </div>
+
+              <div class="h-40 mb-5 bg-cyber-black border-2 border-slate-800 relative overflow-hidden flex items-center justify-center p-4">
+                <div class="absolute inset-0 cyber-grid opacity-50"></div>
+                <div class="relative z-10 text-center">
+                  <div class="font-mono text-[10px] text-cyber-yellow tracking-widest mb-1">HYDRAULIC BRAKE &amp; SUSPENSION OVERHAUL</div>
+                  <div class="font-display font-black text-2xl text-white">BRAKE &amp; CHASSIS SPEC</div>
+                  <div class="font-mono text-[11px] text-cyber-cyan mt-1">DOT-4 BLEEDING // ZERO AIR LOCK</div>
+                </div>
+              </div>
+
+              <h3 class="font-display font-bold text-xl text-white mb-2">
+                Peremajaan Sistem Pengereman &amp; Suspensi
+              </h3>
+              <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                Penggantian kampas rem depan-belakang, pembersihan kaliper dan piston rem, pengurasan minyak rem <strong>DOT-4</strong> dengan metode <em>bleeding</em> hidrolik, serta inspeksi kelonggaran <em>ball joint</em>, <em>tie rod</em>, dan <em>shockbreaker</em>.
+              </p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap gap-2 mb-6 font-mono text-[11px]">
+                <span class="px-2.5 py-1 bg-cyber-black border border-cyber-cyan/50 text-cyber-cyan">Dial Indicator</span>
+                <span class="px-2.5 py-1 bg-cyber-black border border-cyber-cyan/50 text-cyber-cyan">Brake Bleeder</span>
+                <span class="px-2.5 py-1 bg-cyber-black border border-cyber-cyan/50 text-cyber-cyan">Vernier Caliper</span>
+              </div>
+              <button onclick="openBuildModal(
+                'Peremajaan Sistem Pengereman & Suspensi',
+                'BUILD #CHS-03 // CHASSIS_MOD',
+                'Mengukur ketebalan piringan cakram (disc rotor) dengan micrometer dan run-out menggunakan dial indicator. Melakukan pelumasan slide pin kaliper, penggantian brake pad, bleeding minyak rem DOT-4, serta pengecekan tie rod end & ball joint.',
+                ['Micrometer 0-25mm', 'Dial Indicator', 'Brake Bleeder Kit', 'Impact & Torque Wrench'],
+                'Pedal rem kembali pakem tanpa gejala sponginess, pengereman lurus stabil tanpa getaran, dan kaki-kaki bebas bunyi saat melewati jalan bergelombang.'
+              )"
+                class="w-full py-3 bg-cyber-dark border-2 border-cyber-cyan text-cyber-cyan font-mono text-xs font-extrabold tracking-widest uppercase hover:bg-cyber-cyan hover:text-cyber-black transition-colors cursor-pointer">
+                INSPECT TECHNICAL SPECS &gt;
+              </button>
+            </div>
+          </article>
+
+          <!-- BUILD 4: ELECTRICAL_ECU -->
+          <article data-category="ELECTRICAL_ECU" class="project-card brutal-card-pink p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-4 font-mono text-xs">
+                <span class="px-2.5 py-1 bg-cyber-pink text-white font-extrabold">ELECTRICAL_ECU</span>
+                <span class="text-slate-400">BUILD_ID // #MOD-04</span>
+              </div>
+
+              <div class="h-40 mb-5 bg-cyber-black border-2 border-slate-800 relative overflow-hidden flex items-center justify-center p-4">
+                <div class="absolute inset-0 cyber-grid opacity-50"></div>
+                <div class="relative z-10 text-center">
+                  <div class="font-mono text-[10px] text-cyber-yellow tracking-widest mb-1">INDEPENDENT HARNESS &amp; RELAY PROTECTION</div>
+                  <div class="font-display font-black text-2xl text-white">BILED RETROFIT CIRCUIT</div>
+                  <div class="font-mono text-[11px] text-cyber-pink mt-1">12V STABLE LOAD // FUSE PROTECTED</div>
+                </div>
+              </div>
+
+              <h3 class="font-display font-bold text-xl text-white mb-2">
+                Custom Relay &amp; Retrofit Penerangan Biled
+              </h3>
+              <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                Perakitan jalur kabel mandiri menggunakan kabel bintik otomotif (AVSS), sekring pengaman (<em>fuse box</em>), serta rangkaian <strong>relay 4-kaki &amp; 5-kaki</strong> untuk instalasi lampu proyektor Biled agar arus langsung dari aki tetap stabil dan aman.
+              </p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap gap-2 mb-6 font-mono text-[11px]">
+                <span class="px-2.5 py-1 bg-cyber-black border border-cyber-pink/50 text-cyber-pink">Relay 4/5-Pin</span>
+                <span class="px-2.5 py-1 bg-cyber-black border border-cyber-pink/50 text-cyber-pink">AVSS Cable</span>
+                <span class="px-2.5 py-1 bg-cyber-black border border-cyber-pink/50 text-cyber-pink">Heatshrink &amp; Solder</span>
+              </div>
+              <button onclick="openBuildModal(
+                'Custom Relay & Retrofit Sistem Penerangan Biled',
+                'BUILD #MOD-04 // ELECTRICAL_ECU',
+                'Merancang rangkaian relay set terpisah yang mengambil arus utama langsung dari terminal positif aki melalui sekring 20A, dipicu oleh saklar lampu standar. Setiap sambungan disolder dan dilindungi selongsong bakar (heatshrink) serta corrugated tube.',
+                ['Relay Bosch 12V 30A', 'Kabel Bintik AVSS 1.5mm', 'Crimping Tool & Solder', 'Digital Multimeter'],
+                'Tegangan input lampu Biled stabil di 13.8V tanpa drop voltase, saklar kombinasi standar tetap dingin dan awet, serta cut-off cahaya terkalibrasi rapi.'
+              )"
+                class="w-full py-3 bg-cyber-dark border-2 border-cyber-pink text-cyber-pink font-mono text-xs font-extrabold tracking-widest uppercase hover:bg-cyber-pink hover:text-white transition-colors cursor-pointer">
+                INSPECT TECHNICAL SPECS &gt;
+              </button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SECTION 04: WORK EXPERIENCE & PKL LOG
+         ========================================================= -->
+    <section id="experience" class="relative py-24 border-t-2 border-slate-800/80 bg-cyber-dark/40">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="mb-14">
+          <span class="font-mono text-xs text-cyber-yellow tracking-[0.25em] uppercase block mb-2">04 // SERVICE_HISTORY</span>
+          <h2 class="font-display font-black text-3xl sm:text-5xl text-white uppercase tracking-wide">
+            EXPERIENCE &amp; <span class="text-cyber-cyan">PKL LOG</span>
+          </h2>
+        </div>
+
+        <!-- Cyber Timeline -->
+        <div class="relative border-l-4 border-cyber-cyan ml-3 sm:ml-6 space-y-10">
+          
+          <!-- Timeline Entry 1 -->
+          <div class="relative pl-8 sm:pl-10">
+            <div class="absolute -left-[14px] top-1 w-6 h-6 bg-cyber-yellow border-4 border-cyber-black rotate-45"></div>
+            <div class="brutal-card p-6 sm:p-8">
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-3 font-mono text-xs">
+                <span class="px-3 py-1 bg-cyber-yellow text-cyber-black font-extrabold">PRAKTIK KERJA LAPANGAN (PKL)</span>
+                <span class="text-cyber-cyan font-bold">PERIODE: 6 BULAN // SURAKARTA</span>
+              </div>
+              <h3 class="font-display font-bold text-xl sm:text-2xl text-white mb-1">
+                Mekanik Praktik Kerja Lapangan — Bengkel Resmi &amp; Spesialis Servis Berkala
+              </h3>
+              <p class="font-mono text-xs text-slate-400 mb-4">Divisi Periodic Maintenance &amp; General Repair</p>
+              <ul class="space-y-2 text-sm text-slate-300 list-disc list-inside leading-relaxed">
+                <li>Melaksanakan servis berkala kelipatan <strong class="text-white">10.000 KM – 40.000 KM</strong> (penggantian oli mesin, filter oli, filter udara, busi, dan pemeriksaan fluida).</li>
+                <li>Melakukan pengecekan kondisi kesehatan aki (<em>battery tester</em>), ketebalan kampas rem, serta tekanan dan rotasi ban sesuai spesifikasi pabrikan.</li>
+                <li>Mendampingi mekanik senior dalam proses pemindaian kerusakan menggunakan <strong>OBD-II Scan Tool</strong> dan penyetelan mesin EFI.</li>
+                <li>Menerapkan budaya kerja <strong>5R (Ringkas, Rapi, Resik, Rawat, Rajin)</strong> dan standar keselamatan kerja (K3) bengkel otomotif.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Timeline Entry 2 -->
+          <div class="relative pl-8 sm:pl-10">
+            <div class="absolute -left-[14px] top-1 w-6 h-6 bg-cyber-pink border-4 border-cyber-black rotate-45"></div>
+            <div class="brutal-card-pink p-6 sm:p-8">
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-3 font-mono text-xs">
+                <span class="px-3 py-1 bg-cyber-pink text-white font-extrabold">LKS &amp; PRAKTIK BENGKEL SEKOLAH</span>
+                <span class="text-cyber-yellow font-bold">SMK TEKNIK KENDARAAN RINGAN OTOMOTIF</span>
+              </div>
+              <h3 class="font-display font-bold text-xl sm:text-2xl text-white mb-1">
+                Tim Teknis Lomba Kompetensi Siswa (LKS) Otomotif &amp; Praktik Bengkel
+              </h3>
+              <p class="font-mono text-xs text-slate-400 mb-4">Unit Produksi &amp; Laboratorium Teknik Otomotif</p>
+              <ul class="space-y-2 text-sm text-slate-300 list-disc list-inside leading-relaxed">
+                <li>Melakukan simulasi <em>engine troubleshooting</em> terukur di bawah batas waktu ketat (pelacakan sensor terputus, relay pengapian, dan pompa bahan bakar).</li>
+                <li>Pengukuran presisi komponen mekanik mesin (diameter silinder, jurnal poros engkol, ketebalan cakram) menggunakan <strong class="text-white">Micrometer, Dial Bore Gauge, dan Vernier Caliper</strong>.</li>
+                <li>Merakit papan trainer kelistrikan bodi kendaraan (lampu kepala, sein, hazard, wiper, dan klakson) secara mandiri sesuai diagram skematik.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SECTION 05: ESTABLISH CONNECTION (CONTACT TERMINAL)
+         ========================================================= -->
+    <section id="contact" class="relative py-24 border-t-2 border-slate-800/80">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-12">
+          <span class="font-mono text-xs text-cyber-cyan tracking-[0.25em] uppercase block mb-2">05 // DIRECT_UPLINK</span>
+          <h2 class="font-display font-black text-3xl sm:text-5xl text-white uppercase tracking-wide">
+            ESTABLISH <span class="text-cyber-yellow">CONNECTION</span>
+          </h2>
+          <p class="font-mono text-xs sm:text-sm text-slate-400 mt-3 max-w-xl mx-auto">
+            Terbuka untuk peluang kerja mekanik otomotif, teknisi diagnostik, kolaborasi bengkel modifikasi, maupun konsultasi kelistrikan kendaraan.
+          </p>
+        </div>
+
+        <div class="brutal-card p-6 sm:p-10">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-slate-800 pb-4 mb-6 font-mono text-xs">
+            <span class="text-cyber-yellow font-bold">UPLINK_TO: FADILLAH SURYA SAPUTRA</span>
+            <span class="text-cyber-cyan">LOC: SURAKARTA, JAWA TENGAH</span>
+          </div>
+
+          <form id="contact-form" class="space-y-6">
+            <div class="grid sm:grid-cols-2 gap-6">
+              <div>
+                <label for="contact-name" class="block font-mono text-xs text-cyber-cyan uppercase tracking-wider mb-2">
+                  &gt; NAMA / PERUSAHAAN / BENGKEL
+                </label>
+                <input type="text" id="contact-name" required placeholder="Contoh: HRD Bengkel / Rekan Otomotif"
+                  class="w-full bg-cyber-black border-2 border-slate-700 focus:border-cyber-yellow outline-none px-4 py-3 font-mono text-sm text-white placeholder-slate-600 transition-colors" />
+              </div>
+
+              <div>
+                <label for="contact-email" class="block font-mono text-xs text-cyber-cyan uppercase tracking-wider mb-2">
+                  &gt; EMAIL / NO. WHATSAPP
+                </label>
+                <input type="text" id="contact-email" required placeholder="nama@bengkel.id atau 0812xxxx"
+                  class="w-full bg-cyber-black border-2 border-slate-700 focus:border-cyber-yellow outline-none px-4 py-3 font-mono text-sm text-white placeholder-slate-600 transition-colors" />
+              </div>
+            </div>
+
+            <div>
+              <label for="contact-subject" class="block font-mono text-xs text-cyber-cyan uppercase tracking-wider mb-2">
+                &gt; KATEGORI KEPERLUAN
+              </label>
+              <select id="contact-subject"
+                class="w-full bg-cyber-black border-2 border-slate-700 focus:border-cyber-yellow outline-none px-4 py-3 font-mono text-sm text-white transition-colors">
+                <option value="REKRUTMEN_MEKANIK">TAWARAN KERJA / REKRUTMEN TEKNISI OTOMOTIF</option>
+                <option value="KOLABORASI_BENGKEL">KOLABORASI BENGKEL &amp; MODIFIKASI KELISTRIKAN</option>
+                <option value="KONSULTASI_DIAGNOSTIK">KONSULTASI TUNE-UP &amp; DIAGNOSA OBD-II</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="contact-message" class="block font-mono text-xs text-cyber-cyan uppercase tracking-wider mb-2">
+                &gt; PESAN TRANSMISI
+              </label>
+              <textarea id="contact-message" rows="4" required placeholder="Tuliskan detail tawaran kerja, proyek kelistrikan, atau pesan Anda untuk Surya Saputra..."
+                class="w-full bg-cyber-black border-2 border-slate-700 focus:border-cyber-yellow outline-none px-4 py-3 font-mono text-sm text-white placeholder-slate-600 transition-colors"></textarea>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+              <button type="submit"
+                class="px-8 py-4 bg-cyber-yellow text-cyber-black font-display font-black text-xs sm:text-sm tracking-widest uppercase cyber-chamfer-sm hover:bg-cyber-cyan transition-colors shadow-[5px_5px_0px_#ff003c] cursor-pointer">
+                TRANSMIT MESSAGE &gt;&gt;
+              </button>
+
+              <button type="button" id="copy-handle-btn"
+                class="px-5 py-3.5 border-2 border-cyber-cyan text-cyber-cyan font-mono text-xs font-bold tracking-wider uppercase hover:bg-cyber-cyan hover:text-cyber-black transition-colors cursor-pointer">
+                COPY @suryasaputra_auto
+              </button>
+            </div>
+          </form>
+
+          <!-- Transmission Feedback Box -->
+          <div id="transmission-feedback" class="hidden mt-8 p-5 bg-cyber-black border-2 border-cyber-cyan font-mono text-xs space-y-1.5">
+            <div class="text-cyber-yellow font-bold" id="tx-id"></div>
+            <div class="text-slate-200" id="tx-detail"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+  <footer class="relative z-10 border-t-2 border-slate-800 bg-cyber-black py-8 font-mono text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <span class="text-cyber-yellow font-bold">FADILLAH SURYA SAPUTRA</span> // SMK TKRO AUTOMOTIVE PORTFOLIO
+      </div>
+      <div class="text-cyber-cyan">
+        SURAKARTA, ID &bull; ECU_STATUS: OPTIMAL &bull; 2026
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       BUILD TECHNICAL INSPECTION MODAL (NO ALERT USED)
+       ========================================================= -->
+  <div id="build-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/85 backdrop-blur-sm">
+    <div class="brutal-card max-w-xl w-full p-6 sm:p-8 relative bg-cyber-dark">
+      <div class="flex items-center justify-between border-b-2 border-slate-800 pb-3 mb-4 font-mono text-xs">
+        <span id="modal-build-id" class="text-cyber-yellow font-bold"></span>
+        <button id="close-modal-btn" class="px-2.5 py-1 bg-cyber-pink text-white font-bold hover:bg-cyber-yellow hover:text-cyber-black transition-colors cursor-pointer">
+          [X] CLOSE
+        </button>
+      </div>
+
+      <h3 id="modal-title" class="font-display font-black text-xl sm:text-2xl text-white mb-3"></h3>
+      <p id="modal-desc" class="text-slate-300 text-sm leading-relaxed mb-4"></p>
+
+      <div class="bg-cyber-black border-l-4 border-cyber-cyan p-3.5 mb-5 font-mono text-xs">
+        <span class="text-cyber-cyan font-bold block mb-1">HASIL PENGUJIAN &amp; QC:</span>
+        <span id="modal-result" class="text-slate-200"></span>
+      </div>
+
+      <div class="font-mono text-xs text-cyber-yellow font-bold uppercase mb-2">ALAT UKUR &amp; PERANGKAT:</div>
+      <div id="modal-tools" class="flex flex-wrap gap-2 mb-6 font-mono text-xs"></div>
+
+      <button id="modal-ack-btn" class="w-full py-3 bg-cyber-yellow text-cyber-black font-display font-black text-xs uppercase tracking-widest hover:bg-cyber-cyan transition-colors cursor-pointer">
+        CLOSE DIAGNOSTIC LOG
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       VANILLA JS: MULTI-LAYER PARALLAX ENGINE & GARAGE INTERACTIONS
+       ========================================================= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      /* ---------------------------------------------------------
+         1. MULTI-LAYER PARALLAX ENGINE (SCROLL + CURSOR 3D TILT)
+      --------------------------------------------------------- */
+      const parallaxElements = document.querySelectorAll('.js-parallax');
+      const parallaxGrid = document.getElementById('parallax-grid');
+      const orb1 = document.getElementById('parallax-orb-1');
+      const orb2 = document.getElementById('parallax-orb-2');
+      const heroMechCard = document.getElementById('hero-mech-card');
+
+      let scrollY = window.scrollY;
+      let targetMouseX = 0;
+      let targetMouseY = 0;
+      let currentMouseX = 0;
+      let currentMouseY = 0;
+
+      window.addEventListener('scroll', () => {
+        scrollY = window.scrollY;
+      }, { passive: true });
+
+      window.addEventListener('mousemove', (e) => {
+        targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        targetMouseY = (e.clientY / window.innerHeight) * 2 - 1;
+      }, { passive: true });
+
+      function animateCyberParallax() {
+        currentMouseX += (targetMouseX - currentMouseX) * 0.07;
+        currentMouseY += (targetMouseY - currentMouseY) * 0.07;
+
+        // Layer 1: Background Grid & Neon Orbs
+        if (parallaxGrid) {
+          const gridY = -(scrollY * 0.14);
+          const gridX = currentMouseX * -14;
+          parallaxGrid.style.transform = `translate3d(${gridX.toFixed(2)}px, ${gridY.toFixed(2)}px, 0)`;
+        }
+        if (orb1) {
+          orb1.style.transform = `translate3d(${(currentMouseX * 28).toFixed(2)}px, ${(scrollY * 0.08 + currentMouseY * 24).toFixed(2)}px, 0)`;
+        }
+        if (orb2) {
+          orb2.style.transform = `translate3d(${(currentMouseX * -32).toFixed(2)}px, ${(-scrollY * 0.06 + currentMouseY * -28).toFixed(2)}px, 0)`;
+        }
+
+        // Layer 2 & 3: Midground Watermarks & Foreground Content
+        parallaxElements.forEach((el) => {
+          const speed = parseFloat(el.getAttribute('data-parallax-speed')) || 0;
+          const mouseFactor = parseFloat(el.getAttribute('data-mouse-factor')) || 0;
+
+          const rect = el.getBoundingClientRect();
+          const elementCenterY = rect.top + rect.height / 2;
+          const viewportCenterY = window.innerHeight / 2;
+          const distanceFromCenter = elementCenterY - viewportCenterY;
+
+          const yOffset = distanceFromCenter * speed + (currentMouseY * mouseFactor);
+          const xOffset = currentMouseX * mouseFactor;
+
+          el.style.transform = `translate3d(${xOffset.toFixed(2)}px, ${yOffset.toFixed(2)}px, 0)`;
+        });
+
+        // 3D Perspective Tilt on Hero Mechanic ID Card
+        if (heroMechCard && window.innerWidth >= 1024) {
+          const rotateY = currentMouseX * 5;
+          const rotateX = -currentMouseY * 5;
+          heroMechCard.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+        }
+
+        requestAnimationFrame(animateCyberParallax);
+      }
+
+      requestAnimationFrame(animateCyberParallax);
+
+      /* ---------------------------------------------------------
+         2. TERMINAL TYPEWRITER EFFECT
+      --------------------------------------------------------- */
+      const commands = [
+        "scan --obd2 --ecu-diagnostics",
+        "tuneup --efi-1.5L --valve-check",
+        "wire --relay-biled --volt-stable",
+        "inspect --brake-dot4 --suspension"
+      ];
+      const typingEl = document.getElementById('hero-typing');
+      let cmdIdx = 0;
+      let charIdx = 0;
+      let isDeleting = false;
+
+      function runTerminalTyping() {
+        const current = commands[cmdIdx];
+        if (isDeleting) {
+          typingEl.textContent = current.substring(0, charIdx - 1);
+          charIdx--;
+        } else {
+          typingEl.textContent = current.substring(0, charIdx + 1);
+          charIdx++;
+        }
+
+        let speed = isDeleting ? 28 : 60;
+
+        if (!isDeleting && charIdx === current.length) {
+          speed = 2000;
+          isDeleting = true;
+        } else if (isDeleting && charIdx === 0) {
+          isDeleting = false;
+          cmdIdx = (cmdIdx + 1) % commands.length;
+          speed = 350;
+        }
+
+        setTimeout(runTerminalTyping, speed);
+      }
+      runTerminalTyping();
+
+      /* ---------------------------------------------------------
+         3. CRT SCANLINE TOGGLE
+      --------------------------------------------------------- */
+      const crtToggleBtn = document.getElementById('crt-toggle-btn');
+      const crtOverlay = document.getElementById('crt-overlay');
+      const crtStatus = document.getElementById('crt-status');
+      const crtLed = document.getElementById('crt-led');
+      let crtActive = true;
+
+      crtToggleBtn.addEventListener('click', () => {
+        crtActive = !crtActive;
+        crtOverlay.classList.toggle('crt-off', !crtActive);
+        crtStatus.textContent = crtActive ? 'CRT: ON' : 'CRT: OFF';
+        crtLed.style.backgroundColor = crtActive ? '#fcee0a' : '#64748b';
+      });
+
+      /* ---------------------------------------------------------
+         4. MOBILE MENU DRAWER
+      --------------------------------------------------------- */
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+      });
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      /* ---------------------------------------------------------
+         5. AUTOMOTIVE BUILD CATEGORY FILTER
+      --------------------------------------------------------- */
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const projectCards = document.querySelectorAll('.project-card');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => {
+            b.classList.remove('bg-cyber-yellow', 'text-cyber-black', 'border-cyber-yellow', 'font-extrabold');
+            b.classList.add('bg-cyber-dark', 'text-slate-300', 'border-slate-700');
+          });
+
+          btn.classList.remove('bg-cyber-dark', 'text-slate-300', 'border-slate-700');
+          btn.classList.add('bg-cyber-yellow', 'text-cyber-black', 'border-cyber-yellow', 'font-extrabold');
+
+          const filter = btn.getAttribute('data-filter');
+          projectCards.forEach(card => {
+            const cat = card.getAttribute('data-category');
+            card.style.display = (filter === 'ALL_BUILDS' || cat === filter) ? 'flex' : 'none';
+          });
+        });
+      });
+
+      /* ---------------------------------------------------------
+         6. CONTACT UPLINK FORM & HANDLE CLIPBOARD COPY
+      --------------------------------------------------------- */
+      const contactForm = document.getElementById('contact-form');
+      const feedbackBox = document.getElementById('transmission-feedback');
+      const txIdEl = document.getElementById('tx-id');
+      const txDetailEl = document.getElementById('tx-detail');
+
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const sender = document.getElementById('contact-name').value.trim();
+        const subject = document.getElementById('contact-subject').value;
+        const packetCode = 'TX-FSS-' + Math.floor(1000 + Math.random() * 9000);
+
+        txIdEl.textContent = `[OK] TRANSMISSION SENT // ID: ${packetCode}`;
+        txDetailEl.textContent = `Pesan dari "${sender}" [${subject}] berhasil diteruskan ke Fadillah Surya Saputra.`;
+        feedbackBox.classList.remove('hidden');
+        contactForm.reset();
+      });
+
+      const copyHandleBtn = document.getElementById('copy-handle-btn');
+      copyHandleBtn.addEventListener('click', () => {
+        const tempInput = document.createElement('input');
+        tempInput.value = '@suryasaputra_auto';
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+
+        const originalText = copyHandleBtn.textContent;
+        copyHandleBtn.textContent = 'COPIED: @suryasaputra_auto';
+        copyHandleBtn.classList.add('bg-cyber-cyan', 'text-cyber-black');
+        setTimeout(() => {
+          copyHandleBtn.textContent = originalText;
+          copyHandleBtn.classList.remove('bg-cyber-cyan', 'text-cyber-black');
+        }, 2200);
+      });
+
+      /* ---------------------------------------------------------
+         7. BUILD MODAL CONTROLLER
+      --------------------------------------------------------- */
+      const modal = document.getElementById('build-modal');
+      const closeModalBtn = document.getElementById('close-modal-btn');
+      const modalAckBtn = document.getElementById('modal-ack-btn');
+
+      function closeBuildModal() {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+
+      closeModalBtn.addEventListener('click', closeBuildModal);
+      modalAckBtn.addEventListener('click', closeBuildModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeBuildModal();
+      });
+    });
+
+    function openBuildModal(title, buildId, desc, tools, result) {
+      const modal = document.getElementById('build-modal');
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-build-id').textContent = buildId;
+      document.getElementById('modal-desc').textContent = desc;
+      document.getElementById('modal-result').textContent = result;
+
+      const toolsWrap = document.getElementById('modal-tools');
+      toolsWrap.innerHTML = '';
+      tools.forEach(tool => {
+        const badge = document.createElement('span');
+        badge.className = 'px-2.5 py-1 bg-cyber-black border border-cyber-yellow text-cyber-yellow font-bold';
+        badge.textContent = tool;
+        toolsWrap.appendChild(badge);
+      });
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+  </script>
+</body>
+</html>
